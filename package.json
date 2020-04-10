@@ -1,0 +1,47 @@
+{
+  "name": "spacesheep",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@atlaskit/atlassian-navigation": "^0.10.0",
+    "@atlaskit/avatar": "^17.1.9",
+    "@atlaskit/breadcrumbs": "^9.2.8",
+    "@atlaskit/button": "^13.3.9",
+    "@atlaskit/checkbox": "^10.1.10",
+    "@atlaskit/empty-state": "^6.0.8",
+    "@atlaskit/flag": "^12.3.10",
+    "@atlaskit/form": "^7.2.0",
+    "@atlaskit/lozenge": "^9.1.6",
+    "@atlaskit/menu": "^0.3.1",
+    "@atlaskit/modal-dialog": "^10.5.5",
+    "@atlaskit/page": "^11.0.12",
+    "@atlaskit/section-message": "^4.1.7",
+    "@atlaskit/spinner": "^12.1.6",
+    "@atlaskit/tabs": "^11.2.7",
+    "@atlaskit/tag": "^9.1.0",
+    "@atlaskit/tag-group": "^9.0.6",
+    "@atlaskit/textfield": "^3.1.9",
+    "@atlaskit/theme": "^9.5.2",
+    "axios": "^0.19.2",
+    "draft-js": "^0.11.5",
+    "firebase": "^7.12.0",
+    "gray-matter": "^4.0.2",
+    "markdown-it": "^10.0.0",
+    "next": "^9.3.5-canary.0",
+    "randomcolor": "^0.5.4",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-firebase-hooks": "^2.1.1",
+    "react-firebaseui": "^4.1.0",
+    "styled-components": "^5.0.1"
+  },
+  "devDependencies": {
+    "babel-plugin-styled-components": "^1.8.0",
+    "standard": "^14.3.3"
+  }
+}
