@@ -15,6 +15,7 @@ const Missions = () => {
     { idField: 'id' }
   )
 
+  // TODO: handle error
   const [user, initialising, authError] = useAuthState(firebase.auth())
   const [stars, setStars] = useState(null)
 
@@ -28,7 +29,6 @@ const Missions = () => {
           const stars = []
           snapshot.docs.forEach(doc => stars.push(doc.id))
           setStars(stars)
-          console.log(stars)
         })
     }
 
@@ -47,7 +47,7 @@ const Missions = () => {
       </p>
 
       {
-        (missionsError || (missions && missions.length == 0)) &&
+        (missionsError || (missions && missions.length === 0)) &&
           <SectionMessage appearance='error'>
             <p>Sorry, we couldn't load the missions, try reloading the page?</p>
           </SectionMessage>
@@ -68,26 +68,41 @@ const Missions = () => {
 
       {
         user
-          ? <>{
-            (missions && (stars !== null))
-              ? <MissionGrid>
-                {missions.map(x => <MissionCard key={x.id} {...x} uid={user.uid} starred={stars.includes(x.id)} />)}
-                </MissionGrid>
-              : <MissionGridSpinner>
-                <Spinner size='medium' />
-                </MissionGridSpinner>
-          }
-          </>
-          : <>{
-            missions
-              ? <MissionGrid>
-                {missions.map(x => <MissionCard key={x.id} {...x} />)}
-              </MissionGrid>
-              : <MissionGridSpinner>
-                <Spinner size='medium' />
-              </MissionGridSpinner>
-          }
-          </>
+          ? (
+            <>{
+              (missions && (stars !== null))
+                ? (
+                  <MissionGrid>
+                    {missions.map(x =>
+                      <MissionCard key={x.id} {...x} uid={user.uid} starred={stars.includes(x.id)} />
+                    )}
+                  </MissionGrid>
+                )
+                : (
+                  <MissionGridSpinner>
+                    <Spinner size='medium' />
+                  </MissionGridSpinner>
+                )
+            }
+            </>
+          )
+          : (
+            <>
+              {
+                missions
+                  ? (
+                    <MissionGrid>
+                      {missions.map(x => <MissionCard key={x.id} {...x} />)}
+                    </MissionGrid>
+                  )
+                  : (
+                    <MissionGridSpinner>
+                      <Spinner size='medium' />
+                    </MissionGridSpinner>
+                  )
+              }
+            </>
+          )
       }
 
     </Layout>

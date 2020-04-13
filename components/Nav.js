@@ -8,78 +8,151 @@ import MenuIcon from '@atlaskit/icon/glyph/menu'
 import CrossIcon from '@atlaskit/icon/glyph/cross'
 import { useState } from 'react'
 import Link from 'next/link'
+import { MenuGroup, Section, ButtonItem } from '@atlaskit/menu'
+import Popup from '@atlaskit/popup'
 
 const Nav = ({ links }) => {
-  const [user, initialising, error] = useAuthState(firebase.auth())
+  // TODO: handle error
+  const [user, initialising] = useAuthState(firebase.auth())
   const { width } = useWindowSize()
   const [isOpen, setIsOpen] = useState(false)
+  const [popupIsOpen, setPopupIsOpen] = useState(false)
 
   return (
     <Navbar>
       <NavbarMain>
-        <Left href='/'>
-          <img src='/sheep.png' alt='SpaceSheep Logo' />
+        <Left>
+          <Link href='/'>
+            <a>
+              <img src='/sheep.png' alt='SpaceSheep Logo' />
+            </a>
+          </Link>
         </Left>
 
         <Right>
           {
             width < '690'
-              ? <>
-                {
-                  isOpen
-                    ? <div onClick={e => setIsOpen(false)}><CrossIcon /></div>
-                    : <div onClick={e => setIsOpen(true)}><MenuIcon /></div>
-                }
-              </>
-              : <>
-                <Button href='/missions' appearance='subtle'>Missions</Button>
-                {
-                  initialising
-                    ? <></>
-                    : user
-                      ? <Avatar href='/profile' src={user.photoURL} />
-                      : <>
-                        <Button appearance='subtle' href='/login'>
-                      Login
-                        </Button>
-                        <Button href='/signup'>
-                      Sign Up
-                        </Button>
-                        </>
-                }
+              ? (
+                <>
+                  {
+                    isOpen
+                      ? <div onClick={e => setIsOpen(false)}><CrossIcon /></div>
+                      : <div onClick={e => setIsOpen(true)}><MenuIcon /></div>
+                  }
                 </>
+              )
+              : (
+                <>
+                  <Link href='/missions'>
+                    <Button appearance='subtle'>Missions</Button>
+                  </Link>
+                  {
+                    initialising
+                      ? <></>
+                      : user
+                        ? (
+                          <Popup
+                            isOpen={popupIsOpen}
+                            onClose={() => setPopupIsOpen(false)}
+                            placement='right-start'
+                            offset='80px,-30px'
+                            content={() => (
+                              <div style={{ width: '15rem' }}>
+                                <MenuGroup>
+                                  <ButtonItem>
+                                    Profile
+                                  </ButtonItem>
+                                  <ButtonItem>
+                                    Logout
+                                  </ButtonItem>
+                                </MenuGroup>
+                              </div>
+                            )}
+                            trigger={triggerProps => (
+                              <div
+                                {...triggerProps}
+                              >
+                                <Avatar
+                                  src={user.photoURL}
+                                  onClick={() => setPopupIsOpen(!popupIsOpen)}
+                                />
+                              </div>
+                            )}
+                          />
+                        )
+                        : (
+                          <>
+                            <Link href='/login'>
+                              <Button appearance='subtle'>
+                                Login
+                              </Button>
+                            </Link>
+                            <Link href='/signup'>
+                              <Button href='/signup'>
+                                Sign Up
+                              </Button>
+                            </Link>
+                          </>
+                        )
+                  }
+                </>
+              )
           }
         </Right>
       </NavbarMain>
       {
         isOpen && (
           <MobileNavbar>
-            <Link href='/missions'>
-              <a style={{ paddingLeft: '2rem' }}>
-                Missions
-              </a>
-            </Link>
-            {
-              user
-                ? <>
-                  <Link href='/profile'>
-                    <a style={{ display: 'flex', alignItems: 'center' }}>
-                      <Avatar src={user.photoURL} />
-                      <span style={{ marginLeft: '.2rem' }}>
-                        {user.displayName}
-                      </span>
-                    </a>
-                  </Link>
-                  </>
-                : <>
-                  <Button appearance='subtle' href='/login'>
-                      Login
-                  </Button>
-                  <Button href='/signup'>
-                      Sign Up
-                  </Button>
-                  </>
-            }
+            <MenuGroup>
+              <Section title='Pages'>
+                <Link href='/missions'>
+                  <ButtonItem>
+                    Missions
+                  </ButtonItem>
+                </Link>
+                <Link href='/hackathons'>
+                  <ButtonItem description='Coming soon' isDisabled>
+                    Hackathons
+                  </ButtonItem>
+                </Link>
+                <Link href='/work-experience'>
+                  <ButtonItem description='Coming soon' isDisabled>
+                    Work Experience
+                  </ButtonItem>
+                </Link>
+              </Section>
+              <Section title='Account' hasSeparator>
+                {
+                  user
+                    ? (
+                      <>
+                        <Link href='/profile'>
+                          <ButtonItem elemAfter={<Avatar src={user.photoURL} />}>
+                            {user.displayName}
+                          </ButtonItem>
+                        </Link>
+                        <ButtonItem onClick={e => firebase.auth().signOut()}>
+                          Logout
+                        </ButtonItem>
+                      </>
+                    )
+                    : (
+                      <>
+                        <Link href='/signup'>
+                          <ButtonItem>
+                            Sign up
+                          </ButtonItem>
+                        </Link>
+                        <Link href='/login'>
+                          <ButtonItem>
+                            Login
+                          </ButtonItem>
+                        </Link>
+                      </>
+                    )
+                }
+              </Section>
+            </MenuGroup>
           </MobileNavbar>
         )
       }
@@ -124,7 +197,7 @@ const Right = styled.div`
 const Left = styled.a`
   display: flex;
   align-items: center;
+  justify-content: center;
 `
-const Bottom = styled.div``
 
 export default Nav

@@ -19,27 +19,15 @@ const uiConfig = {
   ]
 }
 
-const Login = () => {
+const SignUp = () => {
+  // TODO: handle error
   const [user, initialising, error] = useAuthState(firebase.auth())
 
   useEffect(() => {
-    if (!user && !initialising) {
-      Router.push('/login')
+    if (user && !initialising) {
+      Router.push('/profile')
     }
   }, [user, initialising])
-
-  useEffect(() => {
-    const script = document.createElement('script')
-
-    script.innerText = 'setTimeout(()=>(document.getElementsByClassName("firebaseui-idp-text firebaseui-idp-text-long")[0].innerText = "Contine with Github"), 100)'
-
-    script.async = true
-    document.body.appendChild(script)
-
-    return () => {
-      document.body.removeChild(script)
-    }
-  }, [])
 
   return (
     <Layout title='Sign Up'>
@@ -54,4 +42,4 @@ const Gap = styled.div`
   padding: 1rem 0;
 `
 
-export default Login
+export default SignUp

@@ -5,6 +5,7 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import styled from 'styled-components'
 import Router from 'next/router'
 import { useEffect } from 'react'
+import Link from 'next/link'
 
 const uiConfig = {
   signInFlow: 'redirect',
@@ -20,24 +21,14 @@ const uiConfig = {
 }
 
 const Login = () => {
-  const [user, initialising, error] = useAuthState(firebase.auth())
-
-  if (user) {
-    Router.push('/missions')
-  }
+  // TODO: handle error
+  const [user] = useAuthState(firebase.auth())
 
   useEffect(() => {
-    const script = document.createElement('script')
-
-    script.innerText = 'setTimeout(()=>(document.getElementsByClassName("firebaseui-idp-text firebaseui-idp-text-long")[0].innerText = "Contine with Github"), 100)'
-
-    script.async = true
-    document.body.appendChild(script)
-
-    return () => {
-      document.body.removeChild(script)
+    if (user) {
+      Router.push('/missions')
     }
-  }, [])
+  }, [user])
 
   return (
     <Layout title='Log In'>
@@ -45,7 +36,9 @@ const Login = () => {
       <Gap />
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
       <p style={{ textAlign: 'center' }}>
-        <a>Create an account here.</a>
+        <Link href='/signup'>
+          <a>Create an account</a>
+        </Link>
       </p>
     </Layout>
   )

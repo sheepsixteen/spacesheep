@@ -30,19 +30,36 @@ import SectionMessage from '@atlaskit/section-message'
 const MissionPage = ({}) => {
   const md = new MarkdownIt()
   const router = useRouter()
-  const { id } = router.query
+  const { id: mid } = router.query
   const [mission, loading, error] = useDocumentDataOnce(
-    firebase.firestore().doc('missions/' + id)
+    firebase.firestore().doc('missions/' + mid)
   )
   const [content, setContent] = useState('')
   const [gistValue, setGistValue] = useState('')
   const [selectedTab, setSelectedTab] = useState(0)
   const [isPublic, setIsPublic] = useState(true)
+  const [solutions, setSolutions] = useState([])
+
+  useEffect(() => {
+    if (mid) {
+      firebase.firestore()
+        .collection('solutions')
+        .where('isPublic', '==', true)
+        .where('mid', '==', mid)
+        .limit(10)
+        .get()
+        .then(snapshot => {
+          var arr = []
+          snapshot.docs.forEach(x => arr.push(x.data()))
+          setSolutions(arr)
+        })
+    }
+  }, [mid])
 
   useEffect(() => {
     if (firebase.auth().currentUser) {
       firebase.firestore()
-        .doc(`users/${firebase.auth().currentUser.uid}/missions/${id}`)
+        .doc(`users/${firebase.auth().currentUser.uid}/missions/${mid}`)
         .get()
         .then(snapshot => {
           setGistValue(snapshot.data().solution)
@@ -100,13 +117,46 @@ const MissionPage = ({}) => {
                 firebase.auth().currentUser
                   ? <Form onSubmit={data => {
                     var uid = firebase.auth().currentUser.uid
-                    return firebase.firestore()
-                      .doc(`/users/${uid}/missions/${id}`)
-                      .set({
-                        solution: data.gist_id,
-                        timestamp: new Date(),
-                        isPublic: data.isPublic
-                      }, { merge: true })
+                    firebase.firestore()
+                      .collection('solutions')
+                      .where('isPublic', '==', true)
+                      .where('uid', '==', uid)
+                      .where('mid', '==', mid)
+                      .get()
+                      .then(snapshot => {
+                        if (snapshot.empty) {
+                          // create a new document
+                          firebase.firestore()
+                            .collection('/solutions')
+                            .add({
+                              uid: firebase.auth().currentUser.uid,
+                              mid: mid,
+                              gist: data.gist_id,
+                              timestamp: new Date(),
+                              isPublic: data.isPublic
+                            })
+                            .catch(err => {
+                              console.log(err)
+                            })
+                        } else {
+                          // document exists, update it
+                          snapshot.docs[0].ref
+                            .set({
+                              uid: firebase.auth().currentUser.uid,
+                              mid: mid,
+                              gist: data.gist_id,
+                              timestamp: new Date(),
+                              isPublic: data.isPublic
+                            })
+                            .catch(err => {
+                              console.log(err)
+                            })
+                        }
+                      })
+                      .catch(err => {
+                        console.log(err)
+                        // TODO: Display an error
+                      })
                   }}
                     >
                     {({ formProps, submitting }) => (
@@ -138,7 +188,7 @@ const MissionPage = ({}) => {
                         </CheckboxField>
                         <FormFooter>
                           <Button type='submit' appearance='primary' isLoading={submitting}>
-                                  Upload solution
+                            Upload solution
                           </Button>
                         </FormFooter>
                       </form>
@@ -156,10 +206,27 @@ const MissionPage = ({}) => {
                 },
                 {
                   label: 'Solutions',
-                  content: <div>
-                    <h2 style={{ marginTop: '32px' }}>Coming soon</h2>
-                    <p>Soon you'll be able to see other users' solutions.</p>
-                  </div>
+                  content: (
+                    <div style={{ width: '100%' }}>
+                      <SmallGap />
+                      <h2 style={{ margin: '0' }}>Other users' solutions</h2>
+                      <EvenSmallerGap />
+                      {
+                        solutions.map(solution => (
+                          <><Solution>
+                            <Link href={'https://gist.github.com/' + solution.gist}>
+                              <a>Solution by {solution.uid}</a>
+                            </Link>
+                          </Solution><Solution>
+                              <Link href={'https://gist.github.com/' + solution.gist}>
+                              <a>Solution</a>
+                            </Link>
+                          </Solution>
+                          </>
+                        ))
+                      }
+                    </div>
+                  )
                 }
               ]}
             />
@@ -174,7 +241,11 @@ const Gap = styled.div`
 `
 
 const SmallGap = styled.div`
-  padding: 8px 0;
+  padding: 16.5px 0; /* I don't know why it's this number */
+`
+
+const EvenSmallerGap = styled.div`
+  padding: 8px;
 `
 
 const FullscreenSpinnerContainer = styled.div`
@@ -182,6 +253,14 @@ const FullscreenSpinnerContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`
+
+const Solution = styled.div`
+  padding: 12px;
+  border: 1px solid #eee;
+  width: 100%;
+  margin-bottom: .2rem;
+  border-radius: 2px;
 `
 
 export default MissionPage
