@@ -59,10 +59,12 @@ const Nav = ({ links }) => {
                             content={() => (
                               <div style={{ width: '15rem' }}>
                                 <MenuGroup>
-                                  <ButtonItem>
-                                    Profile
-                                  </ButtonItem>
-                                  <ButtonItem>
+                                  <Link href='/profile'>
+                                    <ButtonItem>
+                                      Profile
+                                    </ButtonItem>
+                                  </Link>
+                                  <ButtonItem onClick={e => firebase.auth().signOut()}>
                                     Logout
                                   </ButtonItem>
                                 </MenuGroup>
