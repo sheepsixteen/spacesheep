@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import randomColor from 'randomcolor'
-import { useState } from 'react'
 import Link from 'next/link'
 import Tag from '@atlaskit/tag'
 import TagGroup from '@atlaskit/tag-group'
@@ -16,21 +15,18 @@ const MissionCard = ({
   difficulty,
   tags = [],
   source,
-  uid = null,
-  starred
+  noCard
 }) => {
   return (
-    <Card id={id}>
+    <Card id={id} noCard={noCard}>
       <div>
-        {
-          source &&
-            <BreadcrumbsStateless>
-              {
-                source.map((x, i) =>
-                  <BreadcrumbsItem key={'breadcrumb' + i} href={x.href} text={x.label} />)
-              }
-            </BreadcrumbsStateless>
-        }
+        {source && (
+          <BreadcrumbsStateless>
+            {source.map((x, i) => (
+              <BreadcrumbsItem key={'breadcrumb' + i} href={x.href} text={x.label} />
+            ))}
+          </BreadcrumbsStateless>
+        )}
 
         <h3 style={{ margin: '.5rem 0' }}>
           <Link href='/m/[id]' as={'/m/' + id}>
@@ -39,6 +35,7 @@ const MissionCard = ({
             </a>
           </Link>
         </h3>
+
         <TagGroup>
           <Difficulty difficulty={difficulty} />
           {
@@ -49,8 +46,9 @@ const MissionCard = ({
           }
         </TagGroup>
       </div>
+
       <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-        <Star starred={starred} mid={id} uid={uid} />
+        <Star eid={id} />
       </div>
     </Card>
   )
@@ -61,8 +59,11 @@ const Card = styled.div`
   grid-template-rows: 1fr auto;
   border: 1px solid #eee;
   border-left: 4px solid ${props => randomColor({ seed: props.id })};
+
   padding: 1rem;
   margin-top: -1px;
+  
+  ${props => props.noCard ? 'border: none; padding: 0;' : ''}
 
   &::after {
     content: "";

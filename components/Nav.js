@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Avatar from '@atlaskit/avatar'
 import firebase from '../modules/firebase'
-import { useAuthState } from 'react-firebase-hooks/auth'
+import { useAuth } from '../modules/useAuth'
 import Button from '@atlaskit/button'
 import useWindowSize from '../modules/useWindowSize'
 import MenuIcon from '@atlaskit/icon/glyph/menu'
@@ -11,195 +11,166 @@ import Link from 'next/link'
 import { MenuGroup, Section, ButtonItem } from '@atlaskit/menu'
 import Popup from '@atlaskit/popup'
 
-const Nav = ({ links }) => {
-  // TODO: handle error
-  const [user, initialising] = useAuthState(firebase.auth())
+const pages = [
+  { label: 'Missions', href: '/missions' }
+  // { label: 'Hackathons', href: null },
+  // { label: 'Work', href: null }
+]
+
+const Nav = () => {
+  const { user, signout } = useAuth()
   const { width } = useWindowSize()
-  const [isOpen, setIsOpen] = useState(false)
+
+  const [navbarIsOpen, setNavbarIsOpen] = useState(false)
   const [popupIsOpen, setPopupIsOpen] = useState(false)
 
   return (
-    <Navbar>
-      <NavbarMain>
-        <Left>
-          <Link href='/'>
-            <a>
-              <img src='/sheep.png' alt='SpaceSheep Logo' />
-            </a>
-          </Link>
-        </Left>
+    <NavbarContainer>
+      <Navbar>
+        <Link href='/'>
+          <a>
+            <img height='32px' src='https://img.icons8.com/doodle/2x/sci-fi.png' alt='SpaceSheep logo' />
+          </a>
+        </Link>
 
-        <Right>
-          {
-            width < '690'
-              ? (
+        <Links>
+          {(width < '690') && (
+            navbarIsOpen
+              ? <div onClick={e => setNavbarIsOpen(false)}><CrossIcon /></div>
+              : <div onClick={e => setNavbarIsOpen(true)}><MenuIcon /></div>
+          )}
+
+          {(width > '690') && (
+            <>
+              {pages.map((page, i) => (
+                <Link key={i} href={page.href} passHref>
+                  <Button appearance='subtle' isDisabled={!page.href}>
+                    {page.label}
+                  </Button>
+                </Link>
+              ))}
+
+              {!user && (
                 <>
-                  {
-                    isOpen
-                      ? <div onClick={e => setIsOpen(false)}><CrossIcon /></div>
-                      : <div onClick={e => setIsOpen(true)}><MenuIcon /></div>
-                  }
-                </>
-              )
-              : (
-                <>
-                  <Link href='/missions'>
-                    <Button appearance='subtle'>Missions</Button>
+                  <Link href='/login'>
+                    <Button appearance='subtle'>
+                      Login
+                    </Button>
                   </Link>
-                  {
-                    initialising
-                      ? <></>
-                      : user
-                        ? (
-                          <Popup
-                            isOpen={popupIsOpen}
-                            onClose={() => setPopupIsOpen(false)}
-                            placement='right-start'
-                            offset='80px,-30px'
-                            content={() => (
-                              <div style={{ width: '15rem' }}>
-                                <MenuGroup>
-                                  <Link href='/profile'>
-                                    <ButtonItem>
-                                      Profile
-                                    </ButtonItem>
-                                  </Link>
-                                  <ButtonItem onClick={e => firebase.auth().signOut()}>
-                                    Logout
-                                  </ButtonItem>
-                                </MenuGroup>
-                              </div>
-                            )}
-                            trigger={triggerProps => (
-                              <div
-                                {...triggerProps}
-                              >
-                                <Avatar
-                                  src={user.photoURL}
-                                  onClick={() => setPopupIsOpen(!popupIsOpen)}
-                                />
-                              </div>
-                            )}
-                          />
-                        )
-                        : (
-                          <>
-                            <Link href='/login'>
-                              <Button appearance='subtle'>
-                                Login
-                              </Button>
-                            </Link>
-                            <Link href='/signup'>
-                              <Button href='/signup'>
-                                Sign Up
-                              </Button>
-                            </Link>
-                          </>
-                        )
-                  }
+                  <Link href='/signup'>
+                    <Button appearance='primary'>
+                      Sign up
+                    </Button>
+                  </Link>
                 </>
-              )
-          }
-        </Right>
-      </NavbarMain>
-      {
-        isOpen && (
-          <MobileNavbar>
-            <MenuGroup>
-              <Section title='Pages'>
-                <Link href='/missions'>
-                  <ButtonItem>
-                    Missions
-                  </ButtonItem>
-                </Link>
-                <Link href='/hackathons'>
-                  <ButtonItem description='Coming soon' isDisabled>
-                    Hackathons
-                  </ButtonItem>
-                </Link>
-                <Link href='/work-experience'>
-                  <ButtonItem description='Coming soon' isDisabled>
-                    Work Experience
-                  </ButtonItem>
-                </Link>
-              </Section>
-              <Section title='Account' hasSeparator>
-                {
-                  user
-                    ? (
-                      <>
+              )}
+
+              {user && (
+                <Popup
+                  isOpen={popupIsOpen}
+                  onClose={() => setPopupIsOpen(false)}
+                  placement='right-start'
+                  offset='80px,-30px'
+                  content={() => (
+                    <div style={{ width: '15rem' }}>
+                      <MenuGroup>
                         <Link href='/profile'>
-                          <ButtonItem elemAfter={<Avatar src={user.photoURL} />}>
-                            {user.displayName}
+                          <ButtonItem>
+                            Profile
                           </ButtonItem>
                         </Link>
                         <ButtonItem onClick={e => firebase.auth().signOut()}>
                           Logout
                         </ButtonItem>
-                      </>
-                    )
-                    : (
-                      <>
-                        <Link href='/signup'>
-                          <ButtonItem>
-                            Sign up
-                          </ButtonItem>
-                        </Link>
-                        <Link href='/login'>
-                          <ButtonItem>
-                            Login
-                          </ButtonItem>
-                        </Link>
-                      </>
-                    )
-                }
-              </Section>
-            </MenuGroup>
-          </MobileNavbar>
-        )
-      }
-    </Navbar>
+                      </MenuGroup>
+                    </div>
+                  )}
+                  trigger={triggerProps => (
+                    <div
+                      {...triggerProps}
+                    >
+                      <Avatar
+                        src={user.photoURL}
+                        onClick={() => setPopupIsOpen(!popupIsOpen)}
+                      />
+                    </div>
+                  )}
+                />
+              )}
+            </>
+          )}
+        </Links>
+      </Navbar>
+
+      {/* Mobile Navbar */}
+      {(navbarIsOpen && width < '690') && (
+        <MenuGroup style={{ backgroundColor: '#f6f6f6' }}>
+          <Section title='Pages'>
+            {pages.map((page, i) => (
+              <Link key={i} href={page.href} passHref>
+                <ButtonItem isDisabled={!page.href}>
+                  {page.label}
+                </ButtonItem>
+              </Link>
+            ))}
+          </Section>
+
+          <Section title='Account' hasSeparator>
+            {user ? (
+              <>
+                <Link href='/profile'>
+                  <ButtonItem elemAfter={<Avatar src={user.photoURL} />}>
+                    My Profile
+                  </ButtonItem>
+                </Link>
+                <ButtonItem onClick={e => signout()}>
+                  Logout
+                </ButtonItem>
+              </>
+            ) : (
+              <>
+                <Link href='/signup'>
+                  <ButtonItem>
+                    Sign up
+                  </ButtonItem>
+                </Link>
+                <Link href='/login'>
+                  <ButtonItem>
+                    Login
+                  </ButtonItem>
+                </Link>
+              </>
+            )}
+          </Section>
+        </MenuGroup>
+      )}
+    </NavbarContainer>
   )
 }
 
-const Navbar = styled.nav`
+const NavbarContainer = styled.nav`
   border-bottom: 1px solid #eee;
+  background-color: #f6f6f6;
 `
 
-const NavbarMain = styled.div`
+const Navbar = styled.div`
   box-sizing: border-box;
   margin: 0 auto;
   width: 95vw;
   max-width: 1690px;
-  padding: 1rem;
+  padding: 1rem 0;
 
-  display: flex;
-`
-
-const MobileNavbar = styled(NavbarMain)`
-  padding: 0 0 1rem 0;
-  display: flex;
-  flex-direction: column;
-
-  a {
-    margin-bottom: .3rem;
-  }
-`
-
-const Right = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 32px auto;
   align-items: center;
-  width: 100%;
-  justify-content: flex-end;
-
-  a {
-    margin-right: .3rem;
-  }
 `
-const Left = styled.a`
-  display: flex;
+
+const Links = styled.div`
+  justify-self: end;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-gap: .1rem;
   align-items: center;
-  justify-content: center;
 `
 
 export default Nav

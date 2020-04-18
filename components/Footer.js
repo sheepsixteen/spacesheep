@@ -31,7 +31,7 @@ const LinksContainer = styled.div`
 
 const FooterContainer = styled.footer`
   border-top: 1px solid #eee;
-  background-color: #eee;
+  background-color: #f6f6f6;
   padding: 2rem;
   text-align: center;
 `

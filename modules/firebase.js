@@ -4,7 +4,7 @@ import 'firebase/auth'
 import 'firebase/analytics'
 import 'firebase/firestore'
 
-if (firebase.apps.length == 0) {
+if (!firebase.apps.length) {
   firebase.initializeApp({
     apiKey: 'AIzaSyB-3QFar96W2n4AFn1GLs_yVOaTAeuDFGE',
     authDomain: 'sheep16-spacesheep.firebaseapp.com',

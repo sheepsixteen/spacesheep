@@ -1,36 +1,33 @@
 import StarFilledIcon from '@atlaskit/icon/glyph/star-filled'
 import StarIcon from '@atlaskit/icon/glyph/star'
-import Button, { ButtonGroup } from '@atlaskit/button'
-import firebase from '../modules/firebase'
-import { useEffect, useState } from 'react'
+import Button from '@atlaskit/button'
+import { useInteraction } from '../modules/useInteraction'
+import { useAuth } from '../modules/useAuth'
 
-// TODO: Convert updateStars to a useEffect
-const Star = ({ mid, uid, starred }) => {
-  const [isStarred, setIsStarred] = useState(starred)
+const Star = ({ eid }) => {
+  const { user } = useAuth()
+  const [interaction, setInteraction] = useInteraction(eid)
 
-  const updateStars = (isStarred) => {
-    firebase.firestore()
-      .doc(`/users/${uid}/stars/${mid}`)
-      .set({
-        starred: isStarred
-      })
+  // If not signed in, just an empty div
+  if (!user) {
+    return <div />
   }
 
-  if (!uid) {
-    return <></>
+  // While loading
+  if (interaction === null) {
+    return <Button isLoading />
   }
 
   return (
     <Button
-      iconBefore={<>{
-        isStarred
+      iconBefore={
+        interaction.isStarred
           ? <StarFilledIcon />
           : <StarIcon />
       }
-      </>}
-      onClick={e => { setIsStarred(!isStarred); updateStars(!isStarred) }}
+      onClick={e => setInteraction({ isStarred: !interaction.isStarred })}
     >
-      {isStarred ? 'Unstar' : 'Star'}
+      {interaction.isStarred ? 'Unstar' : 'Star'}
     </Button>
   )
 }

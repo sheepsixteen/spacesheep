@@ -1,11 +1,11 @@
 import styled, { createGlobalStyle } from 'styled-components'
 import Head from 'next/head'
 
-import Page from '@atlaskit/page'
+import Spinner from '@atlaskit/spinner'
 import Navbar from './Nav'
 import Footer from './Footer'
 
-const Layout = ({ title, children }) => (
+const Layout = ({ title, loading = false, children }) => (
   <>
     <Head>
       <title>{title} | SpaceSheep</title>
@@ -18,11 +18,15 @@ const Layout = ({ title, children }) => (
     <Wrapper>
       <Navbar />
 
-      <Page>
-        <Container>
-          {children}
-        </Container>
-      </Page>
+      <Container>
+        {children}
+
+        {loading && (
+          <SpinnerContainer>
+            <Spinner size='medium' />
+          </SpinnerContainer>
+        )}
+      </Container>
 
       <Footer />
     </Wrapper>
@@ -40,7 +44,6 @@ const GlobalStyle = createGlobalStyle`
 
 const Container = styled.div.attrs(props => ({
 }))`
-  flex: 1;
   margin-top: 2rem;
   margin: 2rem auto;
   width: 95vw;
@@ -53,9 +56,17 @@ const Container = styled.div.attrs(props => ({
 
 // Sticky footer
 const Wrapper = styled.div`
+  height: 100%;
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
+`
+
+const SpinnerContainer = styled.div`
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 export default Layout

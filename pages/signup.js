@@ -25,7 +25,7 @@ const SignUp = () => {
 
   useEffect(() => {
     if (user && !initialising) {
-      Router.push('/profile')
+      Router.push('/profile?first=1')
     }
   }, [user, initialising])
 

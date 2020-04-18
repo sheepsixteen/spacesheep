@@ -3,39 +3,29 @@ import Layout from '../components/Layout'
 import MissionCard from '../components/MissionCard'
 import firebase from '../modules/firebase'
 import { useCollectionDataOnce } from 'react-firebase-hooks/firestore'
-import { useAuthState } from 'react-firebase-hooks/auth'
-import Spinner from '@atlaskit/spinner'
 import SectionMessage from '@atlaskit/section-message'
-import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useAuth } from '../modules/useAuth'
+import { useRouter } from 'next/router'
 
 const Missions = () => {
+  const { user, data } = useAuth()
+  const router = useRouter()
+
+  if (data === false) {
+    router.push('/create-account')
+  }
+
   const [missions, loading, missionsError] = useCollectionDataOnce(
-    firebase.firestore().collection('missions'),
+    firebase.firestore()
+      .collection('entities')
+      .where('type', '==', 'mission'),
     { idField: 'id' }
   )
 
-  // TODO: handle error
-  const [user, initialising, authError] = useAuthState(firebase.auth())
-  const [stars, setStars] = useState(null)
-
-  useEffect(() => {
-    const getStars = () => {
-      firebase.firestore()
-        .collection(`/users/${user.uid}/stars`)
-        .where('starred', '==', true)
-        .get()
-        .then(snapshot => {
-          const stars = []
-          snapshot.docs.forEach(doc => stars.push(doc.id))
-          setStars(stars)
-        })
-    }
-
-    if (user) {
-      getStars()
-    }
-  }, [user])
+  if (loading) {
+    return <Layout title='Missions' loading />
+  }
 
   return (
     <Layout title='Missions'>
@@ -47,14 +37,15 @@ const Missions = () => {
       </p>
 
       {
-        (missionsError || (missions && missions.length === 0)) &&
+        missionsError && (
           <SectionMessage appearance='error'>
             <p>Sorry, we couldn't load the missions, try reloading the page?</p>
           </SectionMessage>
+        )
       }
 
       {
-        (!initialising && !user) &&
+        !user &&
           <>
             <SectionMessage>
               <p>
@@ -67,56 +58,11 @@ const Missions = () => {
       }
 
       {
-        user
-          ? (
-            <>{
-              (missions && (stars !== null))
-                ? (
-                  <MissionGrid>
-                    {missions.map(x =>
-                      <MissionCard key={x.id} {...x} uid={user.uid} starred={stars.includes(x.id)} />
-                    )}
-                  </MissionGrid>
-                )
-                : (
-                  <MissionGridSpinner>
-                    <Spinner size='medium' />
-                  </MissionGridSpinner>
-                )
-            }
-            </>
-          )
-          : (
-            <>
-              {
-                missions
-                  ? (
-                    <MissionGrid>
-                      {missions.map(x => <MissionCard key={x.id} {...x} />)}
-                    </MissionGrid>
-                  )
-                  : (
-                    <MissionGridSpinner>
-                      <Spinner size='medium' />
-                    </MissionGridSpinner>
-                  )
-              }
-            </>
-          )
+        missions.map(x => <MissionCard key={x.id} {...x} />)
       }
-
     </Layout>
   )
 }
-
-const MissionGrid = styled.div``
-
-const MissionGridSpinner = styled.div`
-  padding: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
 
 const Gap = styled.div`
   padding: 1rem 0;
