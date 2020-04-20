@@ -31,8 +31,6 @@ export const useInteraction = (eid) => {
     var unsubscribe = () => {}
 
     function handleInteractionSnapshot (snapshot) {
-      // There should only be one doc so "forEach" just gets
-      // the first doc.
       if (snapshot.empty) {
         setInteraction(false)
       }

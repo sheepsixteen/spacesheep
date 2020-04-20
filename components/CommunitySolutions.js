@@ -3,6 +3,7 @@ import { useCollectionDataOnce } from 'react-firebase-hooks/firestore'
 import styled from 'styled-components'
 import Spinner from '@atlaskit/spinner'
 import SectionMessage from '@atlaskit/section-message'
+import Solution from './Solution'
 
 const CommunitySolutions = ({ mid }) => {
   const [solutions, loading, error] = useCollectionDataOnce(
@@ -35,31 +36,15 @@ const CommunitySolutions = ({ mid }) => {
   return (
     <div style={{ width: '100%' }}>
       <Gap />
-      {
-        solutions.map(({ id, username, gist }) => (
-          <Solution key={id}>
-            <h4>
-              <a href={'https://gist.github.com/' + gist}>Solution by {username}</a>
-            </h4>
-          </Solution>
-        ))
-      }
+      {solutions.map(solution => (
+        <Solution key={solution.id} {...solution} />
+      ))}
     </div>
   )
 }
 
 const Gap = styled.div`
   padding: .5rem 0;
-`
-
-const Solution = styled.div`
-  border: 1px solid #eee;
-  padding: 1rem;
-  border-radius: 4px;
-
-  h4:hover {
-    text-decoration: none;
-  }
 `
 
 export default CommunitySolutions

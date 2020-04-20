@@ -25,18 +25,19 @@ const YourSolution = ({ mid }) => {
     try {
       await axios.get(`https://api.github.com/gists/${data.gist}`)
     } catch (e) {
-      // This is if you get rate limited
-      if (e.message === 'Network Error') {
-        setInteraction(data)
-        return undefined
-      }
-
-      return {
-        gist: 'NOT_FOUND'
+      // If the request is NOT being rate limited, but there's still an error,
+      // return an error.
+      if (e.message !== 'Network Error') {
+        return {
+          gist: 'NOT_FOUND'
+        }
       }
     }
 
-    setInteraction(data)
+    setInteraction({
+      ...data,
+      gist_submitted: new Date()
+    })
     return undefined
   }
 
