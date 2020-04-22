@@ -1,6 +1,6 @@
 {
   "name": "spacesheep",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -20,12 +20,14 @@
     "@atlaskit/menu": "^0.3.1",
     "@atlaskit/modal-dialog": "^10.5.5",
     "@atlaskit/page": "^11.0.12",
+    "@atlaskit/pagination": "^12.0.19",
     "@atlaskit/popup": "^0.3.3",
     "@atlaskit/section-message": "^4.1.7",
     "@atlaskit/spinner": "^12.1.6",
     "@atlaskit/tabs": "^11.2.7",
     "@atlaskit/tag": "^9.1.0",
     "@atlaskit/tag-group": "^9.0.6",
+    "@atlaskit/textarea": "^2.2.7",
     "@atlaskit/textfield": "^3.1.9",
     "@atlaskit/theme": "^9.5.2",
     "axios": "^0.19.2",
@@ -33,6 +35,7 @@
     "firebase": "^7.12.0",
     "gray-matter": "^4.0.2",
     "markdown-it": "^10.0.0",
+    "material-ui-avatar-picker": "^1.0.4",
     "moment": "^2.24.0",
     "next": "^9.3.5-canary.0",
     "randomcolor": "^0.5.4",
@@ -41,6 +44,7 @@
     "react-firebase-hooks": "^2.1.1",
     "react-firebaseui": "^4.1.0",
     "react-gist": "^1.2.1",
+    "react-icons": "^3.10.0",
     "styled-components": "^5.0.1"
   },
   "devDependencies": {

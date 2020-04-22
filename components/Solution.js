@@ -31,9 +31,11 @@ const Solution = ({ id, gist, username, gist_submitted: gistSubmitted }) => {
           <Gist id={gist} />
         )}
       </CardBody>
-      <CardFooter>
-        Submitted {moment(gistSubmitted.toDate()).fromNow()}
-      </CardFooter>
+      {gistSubmitted && (
+        <CardFooter>
+          Submitted {moment(gistSubmitted.toDate()).fromNow()}
+        </CardFooter>
+      )}
     </Card>
   )
 }

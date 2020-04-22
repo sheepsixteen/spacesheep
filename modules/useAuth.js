@@ -37,6 +37,14 @@ function useProvideAuth () {
       })
   }
 
+  // Change user data in database
+  const updateData = (data) => {
+    return firebase
+      .firestore()
+      .doc(`users/${user.uid}`)
+      .set(data, { merge: true })
+  }
+
   // Subscribe to user on mount
   // Because this sets state in the callback it will cause any
   // component that utilizes this hook to re-render with the
@@ -73,6 +81,7 @@ function useProvideAuth () {
   return {
     user,
     data,
+    setData: updateData,
     signout
   }
 }
