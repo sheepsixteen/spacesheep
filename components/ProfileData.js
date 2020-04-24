@@ -38,7 +38,7 @@ const ProfileData = () => {
                 )}
               </Field>
               <Field name='github' label='Github username' defaultValue={data.github}>
-                {({ fieldProps , error }) => (
+                {({ fieldProps, error }) => (
                   <TextField elemBeforeInput={<FaGithub style={{ paddingLeft: '4px' }} />} {...fieldProps} />
                 )}
               </Field>

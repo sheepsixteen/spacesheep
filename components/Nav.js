@@ -27,7 +27,7 @@ const Nav = () => {
   return (
     <NavbarContainer>
       <Navbar>
-        <Link href='/'>
+        <Link passHref href='/'>
           <a>
             <img height='32px' src='https://img.icons8.com/doodle/2x/sci-fi.png' alt='SpaceSheep logo' />
           </a>
@@ -52,12 +52,12 @@ const Nav = () => {
 
               {!user && (
                 <>
-                  <Link href='/login'>
+                  <Link passHref href='/login'>
                     <Button appearance='subtle'>
                       Login
                     </Button>
                   </Link>
-                  <Link href='/signup'>
+                  <Link passHref href='/signup'>
                     <Button appearance='primary'>
                       Sign up
                     </Button>
@@ -74,7 +74,7 @@ const Nav = () => {
                   content={() => (
                     <div style={{ width: '15rem' }}>
                       <MenuGroup>
-                        <Link href='/profile'>
+                        <Link passHref href='/profile'>
                           <ButtonItem>
                             Profile
                           </ButtonItem>
@@ -107,7 +107,7 @@ const Nav = () => {
         <MenuGroup style={{ backgroundColor: '#f6f6f6' }}>
           <Section title='Pages'>
             {pages.map((page, i) => (
-              <Link key={i} href={page.href} passHref>
+              <Link passHref key={i} href={page.href} passHref>
                 <ButtonItem isDisabled={!page.href}>
                   {page.label}
                 </ButtonItem>
@@ -118,7 +118,7 @@ const Nav = () => {
           <Section title='Account' hasSeparator>
             {user ? (
               <>
-                <Link href='/profile'>
+                <Link passHref href='/profile'>
                   <ButtonItem elemAfter={<Avatar src={user.photoURL} />}>
                     My Profile
                   </ButtonItem>
@@ -129,12 +129,12 @@ const Nav = () => {
               </>
             ) : (
               <>
-                <Link href='/signup'>
+                <Link passHref href='/signup'>
                   <ButtonItem>
                     Sign up
                   </ButtonItem>
                 </Link>
-                <Link href='/login'>
+                <Link passHref href='/login'>
                   <ButtonItem>
                     Login
                   </ButtonItem>

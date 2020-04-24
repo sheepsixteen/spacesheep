@@ -1,12 +1,11 @@
 import styled from 'styled-components'
 import Layout from '../components/Layout'
 import MissionCard from '../components/MissionCard'
-import firebase from '../modules/firebase'
-import { useCollectionDataOnce } from 'react-firebase-hooks/firestore'
 import SectionMessage from '@atlaskit/section-message'
 import Link from 'next/link'
 import { useAuth } from '../modules/useAuth'
 import { useRouter } from 'next/router'
+import { useEntities } from '../modules/useEntities'
 
 const Missions = () => {
   const { user, data } = useAuth()
@@ -16,15 +15,21 @@ const Missions = () => {
     router.push('/create-account')
   }
 
-  const [missions, loading, missionsError] = useCollectionDataOnce(
-    firebase.firestore()
-      .collection('entities')
-      .where('type', '==', 'mission'),
-    { idField: 'id' }
-  )
+  const after = router.query.after
+  const missions = useEntities('mission', 'missions', after)
 
-  if (loading) {
+  if (missions === null) {
     return <Layout title='Missions' loading />
+  }
+
+  if (missions === false) {
+    return (
+      <Layout title='Missions'>
+        <SectionMessage appearance='error'>
+          <p>Sorry, there was a problem loading the missions, try reloading the page?</p>
+        </SectionMessage>
+      </Layout>
+    )
   }
 
   return (
@@ -36,30 +41,19 @@ const Missions = () => {
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae qui deserunt reiciendis laborum alias unde quisquam perspiciatis aliquid expedita harum inventore nihil corporis velit itaque dolorem quidem, earum porro! Dolorem.
       </p>
 
-      {
-        missionsError && (
-          <SectionMessage appearance='error'>
-            <p>Sorry, we couldn't load the missions, try reloading the page?</p>
+      {!user && (
+        <>
+          <SectionMessage>
+            <p>
+              <Link href='/signup'><a>Sign up</a></Link> or <Link href='/login'><a>login</a></Link> to star missions, save solutions and get personalized missions.
+            </p>
           </SectionMessage>
-        )
-      }
 
-      {
-        !user &&
-          <>
-            <SectionMessage>
-              <p>
-                <Link href='/signup'><a>Sign up</a></Link> or <Link href='/login'><a>login</a></Link> to star missions, save solutions and get personalized missions.
-              </p>
-            </SectionMessage>
+          <Gap />
+        </>
+      )}
 
-            <Gap />
-          </>
-      }
-
-      {
-        missions.map(x => <MissionCard key={x.id} {...x} />)
-      }
+      {missions.map(x => <MissionCard key={x.id} id={x.id} {...x.data()} />)}
     </Layout>
   )
 }
