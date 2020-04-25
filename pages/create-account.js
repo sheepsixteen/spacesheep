@@ -7,7 +7,7 @@ import firebase from '../modules/firebase'
 import { useRouter } from 'next/router'
 
 const CreateAccount = () => {
-  const { user, data } = useAuth()
+  const { user } = useAuth()
   const router = useRouter()
 
   if (!user) {

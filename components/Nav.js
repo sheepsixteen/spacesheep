@@ -107,7 +107,7 @@ const Nav = () => {
         <MenuGroup style={{ backgroundColor: '#f6f6f6' }}>
           <Section title='Pages'>
             {pages.map((page, i) => (
-              <Link passHref key={i} href={page.href} passHref>
+              <Link passHref key={i} href={page.href}>
                 <ButtonItem isDisabled={!page.href}>
                   {page.label}
                 </ButtonItem>
