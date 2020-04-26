@@ -74,7 +74,7 @@ const Nav = () => {
                   content={() => (
                     <div style={{ width: '15rem' }}>
                       <MenuGroup>
-                        <Link passHref href='/profile'>
+                        <Link passHref href='/u'>
                           <ButtonItem>
                             Profile
                           </ButtonItem>
@@ -118,7 +118,7 @@ const Nav = () => {
           <Section title='Account' hasSeparator>
             {data ? (
               <>
-                <Link passHref href='/profile'>
+                <Link passHref href='/u'>
                   <ButtonItem elemAfter={<Avatar src={data.photoURL} />}>
                     My Profile
                   </ButtonItem>

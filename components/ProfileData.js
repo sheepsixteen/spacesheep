@@ -1,7 +1,7 @@
 import { useAuth } from '../modules/useAuth'
 import styled from 'styled-components'
 import Avatar from '@atlaskit/avatar'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '@atlaskit/button/dist/cjs/components/Button'
 import EditIcon from '@atlaskit/icon/glyph/edit'
 import TextArea from '@atlaskit/textarea'
@@ -12,21 +12,42 @@ import { fontSize } from '@atlaskit/theme'
 import { FaGithub, FaLink } from 'react-icons/fa'
 import { GoOrganization } from 'react-icons/go'
 
-const ProfileData = () => {
-  const { setData, data } = useAuth()
+// props: { fullname, username, bio, github, website, company }
+
+const ProfileData = (props) => {
+  const { data: userData, setData: setUserData } = useAuth()
   const [isEditing, setIsEditing] = useState(false)
+  const [isMe, setIsMe] = useState(null)
+
+  const [data, setData] = useState(null)
+
+  useEffect(() => {
+    setData(props || userData)
+  }, [userData, props])
+
+  useEffect(() => {
+    if (userData && data) {
+      setIsMe(userData.username === data.username)
+    } else {
+      setIsMe(false)
+    }
+  }, [data])
+
+  if (!data) {
+    return <div />
+  }
 
   return (
     <div style={{ maxWidth: '30rem' }}>
-      {isEditing ? (
+      {(isEditing && isMe) ? (
         <Form onSubmit={data => {
           setIsEditing(false)
-          let form = {}
+          const form = {}
           Object.keys(data).forEach(key => {
             if (key == 'username') return
             form[key] = data[key] || null
           })
-          setData(form)
+          setUserData(form)
         }}>
           {({ formProps, submitting }) => (
             <form {...formProps}>
@@ -124,12 +145,14 @@ const ProfileData = () => {
 
           <Gap size={1} />
 
-          <Button
-            onClick={e => setIsEditing(true)}
-            iconBefore={<EditIcon />}
-          >
-            Edit Profile
-          </Button>
+          {isMe && (
+            <Button
+              onClick={e => setIsEditing(true)}
+              iconBefore={<EditIcon />}
+              >
+              Edit Profile
+            </Button>
+          )}
         </>
       )}
     </div>

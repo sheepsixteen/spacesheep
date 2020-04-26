@@ -17,7 +17,7 @@ const CreateAccount = () => {
   // Redirect if there is already a username
   useEffect(() => {
     if (data) {
-      router.push('/profile')
+      router.push('/u')
     }
   }, [data])
 
@@ -34,7 +34,7 @@ const CreateAccount = () => {
         username: data.username
       })
       .then(() => {
-        router.push('/profile')
+        router.push('/u')
       }).catch(err => {
         console.log({ message: err.message })
         return { username: err.message }

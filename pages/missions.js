@@ -10,11 +10,6 @@ import { useEntities } from '../modules/useEntities'
 const Missions = () => {
   const { user, data } = useAuth()
   const router = useRouter()
-
-  if (data === false) {
-    router.push('/create-account')
-  }
-
   const after = router.query.after
   const missions = useEntities('mission', 'missions', after)
 
