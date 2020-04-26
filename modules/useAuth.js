@@ -22,9 +22,10 @@ export const useAuth = () => {
 
 /**
  * Hook which provides authentication
- * @param {Boolean} redirect - Should we redirect to /create-account if there is no data?
  */
 function useProvideAuth () {
+  const router = useRouter()
+
   const [user, setUser] = useState(null)
   const [data, setData] = useState(null)
 
@@ -34,6 +35,7 @@ function useProvideAuth () {
       .signOut()
       .then(() => {
         setUser(false)
+        setData(false)
       })
   }
 
@@ -55,6 +57,7 @@ function useProvideAuth () {
         setUser(authUser)
       } else {
         setUser(false)
+        setData(false)
       }
     })
     // Cleanup subscription on unmount
@@ -66,7 +69,6 @@ function useProvideAuth () {
     var unsubscribe = () => {}
 
     if (user) {
-      console.log('getting from firebase')
       unsubscribe = firebase.firestore()
         .doc(`users/${user.uid}`)
         .onSnapshot(snapshot => {
@@ -76,6 +78,14 @@ function useProvideAuth () {
 
     return () => unsubscribe()
   }, [user])
+
+  // At any point, if the user is signed in but there is no data saved,
+  // redirect to /create-account
+  useEffect(() => {
+    if (user && data === false) {
+      router.push('/create-account')
+    }
+  }, [user, data])
 
   // Return the user object and auth methods
   return {

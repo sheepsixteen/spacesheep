@@ -8,7 +8,7 @@ import { useEffect } from 'react'
 
 const uiConfig = {
   signInFlow: 'redirect',
-  signInSuccessUrl: '/missions',
+  signInSuccessUrl: '/create-account',
   signInOptions: [
     {
       provider: firebase.auth.GithubAuthProvider.PROVIDER_ID,
@@ -25,7 +25,7 @@ const SignUp = () => {
 
   useEffect(() => {
     if (user && !initialising) {
-      Router.push('/profile?first=1')
+      Router.push('/u')
     }
   }, [user, initialising])
 

@@ -16,7 +16,7 @@ import CommunitySolutions from '../../components/CommunitySolutions'
 // TODO: fix 8px gap on the left of the tabs (so annoying)
 // TODO: add "everything ok" once saved to firebase
 
-const MissionPage = ({}) => {
+const MissionPage = () => {
   const router = useRouter()
   const { mid } = router.query
   const { mission, missionSnapshot, content } = useMission(mid)

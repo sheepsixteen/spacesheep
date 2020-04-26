@@ -20,7 +20,6 @@ export const useInteraction = (eid) => {
       // writing, saving some time.
       .doc(`interactions/${user.uid + eid}`)
       .set({
-        uid: user.uid,
         username: userdata.username,
         eid,
         ...data
