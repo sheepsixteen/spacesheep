@@ -19,7 +19,15 @@ const ProfileData = () => {
   return (
     <div style={{ maxWidth: '30rem' }}>
       {isEditing ? (
-        <Form onSubmit={data => { setIsEditing(false); return setData(data) }}>
+        <Form onSubmit={data => {
+          setIsEditing(false)
+          let form = {}
+          Object.keys(data).forEach(key => {
+            if (key == 'username') return
+            form[key] = data[key] || null
+          })
+          setData(form)
+        }}>
           {({ formProps, submitting }) => (
             <form {...formProps}>
               <Field name='fullname' label='Full name' defaultValue={data.fullname}>
@@ -68,16 +76,23 @@ const ProfileData = () => {
       ) : (
         <>
           <Avatar src={user.photoURL} appearance='square' size='xlarge' />
-          <h1 style={{ marginTop: '1rem' }}>
-            {data.fullname}
-          </h1>
-          <h2 style={{ marginTop: '0' }}>
-            @{data.username}
-          </h2>
-          {/* Bigger font <p> */}
-          <p style={{ fontSize: fontSize() * 1.1 }}>
-            {data.bio}
-          </p>
+          {data.fullname && (
+            <h1 style={{ marginTop: '1rem' }}>
+              {data.fullname}
+            </h1>
+          )}
+          
+          {data.username && (
+            <h2 style={{ marginTop: '0' }}>
+              @{data.username}
+            </h2>
+          )}
+
+          {data.bio && (
+            <p style={{ fontSize: fontSize() * 1.1 }}>
+              {data.bio}
+            </p>
+          )}
 
           <Gap size={0.5} />
 

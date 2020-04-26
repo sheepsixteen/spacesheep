@@ -6,7 +6,9 @@
     "test": "standard",
     "preversion": "npm test",
     "postversion": "git push && git push --tags",
-    "dev": "next dev",
+    "startnext": "next dev",
+    "startemulator": "firebase emulators:start",
+    "dev": "npm run startnext & npm run startemulator",
     "build": "next build",
     "start": "next start"
   },

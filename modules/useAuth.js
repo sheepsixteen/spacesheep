@@ -22,7 +22,6 @@ export const useAuth = () => {
 
 /**
  * Hook which provides authentication
- * @param {Boolean} redirect - Should we redirect to /create-account if there is no data?
  */
 function useProvideAuth () {
   const [user, setUser] = useState(null)
