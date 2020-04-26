@@ -53,22 +53,22 @@ const Profile = () => {
         <ProfileData />
 
         <div>
-          <h5>Starred</h5>
+          <h4>Starred</h4>
           <Gap />
           {entities.map(x => <MissionCard key={x.id} id={x.id} {...x.data()} />)}
-          {
-            (entities.length === 0) && (
-              <EmptyState
-                css='background-color: #eee'
-                header='No starred missions'
-                description="You haven't starred any missions, when you star a few, they'll appear here."
-                imageUrl='https://assets-ouch.icons8.com/preview/565/06ac6cf9-cb9e-415a-b529-e774069c0eed.png'
-                primaryAction={
-                  <Link href='/missions'><Button appearance='primary'>Go to missions</Button></Link>
-                }
-              />
-            )
-          }
+
+          {(entities.length === 0) && (
+            <EmptyState
+              header='No starred missions'
+              description="You haven't starred any missions, when you star a few, they'll appear here."
+              imageUrl='https://assets-ouch.icons8.com/preview/565/06ac6cf9-cb9e-415a-b529-e774069c0eed.png'
+              primaryAction={
+                <Link href='/missions'>
+                  <Button appearance='primary'>Go to missions</Button>
+                </Link>
+              }
+            />
+          )}
         </div>
       </Grid>
 

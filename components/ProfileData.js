@@ -13,7 +13,7 @@ import { FaGithub, FaLink } from 'react-icons/fa'
 import { GoOrganization } from 'react-icons/go'
 
 const ProfileData = () => {
-  const { user, setData, data } = useAuth()
+  const { setData, data } = useAuth()
   const [isEditing, setIsEditing] = useState(false)
 
   return (
@@ -75,7 +75,8 @@ const ProfileData = () => {
         </Form>
       ) : (
         <>
-          <Avatar src={user.photoURL} appearance='square' size='xlarge' />
+          <Avatar src={data.picture} appearance='square' size='xlarge' />
+          
           {data.fullname && (
             <h1 style={{ marginTop: '1rem' }}>
               {data.fullname}

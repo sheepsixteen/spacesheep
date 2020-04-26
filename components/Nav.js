@@ -18,7 +18,7 @@ const pages = [
 ]
 
 const Nav = () => {
-  const { user, signout } = useAuth()
+  const { data, signout } = useAuth()
   const { width } = useWindowSize()
 
   const [navbarIsOpen, setNavbarIsOpen] = useState(false)
@@ -50,7 +50,7 @@ const Nav = () => {
                 </Link>
               ))}
 
-              {!user && (
+              {!data && (
                 <>
                   <Link passHref href='/login'>
                     <Button appearance='subtle'>
@@ -65,7 +65,7 @@ const Nav = () => {
                 </>
               )}
 
-              {user && (
+              {data && (
                 <Popup
                   isOpen={popupIsOpen}
                   onClose={() => setPopupIsOpen(false)}
@@ -90,7 +90,7 @@ const Nav = () => {
                       {...triggerProps}
                     >
                       <Avatar
-                        src={user.photoURL}
+                        src={data.picture}
                         onClick={() => setPopupIsOpen(!popupIsOpen)}
                       />
                     </div>
@@ -116,10 +116,10 @@ const Nav = () => {
           </Section>
 
           <Section title='Account' hasSeparator>
-            {user ? (
+            {data ? (
               <>
                 <Link passHref href='/profile'>
-                  <ButtonItem elemAfter={<Avatar src={user.photoURL} />}>
+                  <ButtonItem elemAfter={<Avatar src={data.photoURL} />}>
                     My Profile
                   </ButtonItem>
                 </Link>

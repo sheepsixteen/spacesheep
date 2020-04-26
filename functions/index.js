@@ -65,6 +65,8 @@ exports.setUsername = functions.https.onCall(async (data, context) => {
           .collection('users')
           .doc(uid)
           .set({
+            picture: context.auth.token.picture,
+            email: context.auth.token.email,
             username: username
           })
       }
