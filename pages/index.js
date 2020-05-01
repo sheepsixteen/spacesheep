@@ -29,10 +29,6 @@ const Home = () => (
   </Layout>
 )
 
-const HomeButton = styled(Button)`
-  margin-top: 1em;
-`
-
 const TwoColumns = styled.div`
   display: grid;
   grid-template-columns: 1.5fr 1fr;

@@ -1,11 +1,10 @@
 import styled from 'styled-components'
 import Layout from '../../components/Layout'
 import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Tabs from '@atlaskit/tabs'
 import useMission from '../../modules/useMission'
 import MissionCard from '../../components/MissionCard'
-import { useInteraction } from '../../modules/useInteraction'
 import YourSolution from '../../components/YourSolution'
 import CommunitySolutions from '../../components/CommunitySolutions'
 
@@ -16,7 +15,7 @@ import CommunitySolutions from '../../components/CommunitySolutions'
 // TODO: fix 8px gap on the left of the tabs (so annoying)
 // TODO: add "everything ok" once saved to firebase
 
-const MissionPage = ({}) => {
+const MissionPage = () => {
   const router = useRouter()
   const { mid } = router.query
   const { mission, missionSnapshot, content } = useMission(mid)
