@@ -10,7 +10,7 @@ const RedirectToProfile = () => {
     if (data) {
       router.push(`/u/${data.username}`)
     }
-    
+
     if (data === false) {
       router.push('/signup')
     }

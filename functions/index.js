@@ -50,7 +50,6 @@ exports.setUsername = functions.https.onCall(async (data, context) => {
   const checks = [userExists(uid), usernameInUse(username)]
   return Promise.all(checks)
     .then(checks => {
-      
       if (checks[0] === true) {
         throw new functions.https.HttpsError('already-exists', 'You have already set a username.')
       }

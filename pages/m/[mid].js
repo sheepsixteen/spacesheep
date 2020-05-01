@@ -1,11 +1,10 @@
 import styled from 'styled-components'
 import Layout from '../../components/Layout'
 import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Tabs from '@atlaskit/tabs'
 import useMission from '../../modules/useMission'
 import MissionCard from '../../components/MissionCard'
-import { useInteraction } from '../../modules/useInteraction'
 import YourSolution from '../../components/YourSolution'
 import CommunitySolutions from '../../components/CommunitySolutions'
 

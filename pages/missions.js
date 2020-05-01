@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import { useEntities } from '../modules/useEntities'
 
 const Missions = () => {
-  const { user, data } = useAuth()
+  const { user } = useAuth()
   const router = useRouter()
   const after = router.query.after
   const missions = useEntities('mission', 'missions', after)

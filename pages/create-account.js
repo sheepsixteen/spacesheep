@@ -9,7 +9,6 @@ import SectionMessage from '@atlaskit/section-message'
 import { useEffect } from 'react'
 import styled from 'styled-components'
 
-
 const CreateAccount = () => {
   const { user, data } = useAuth()
   const router = useRouter()
@@ -58,12 +57,12 @@ const CreateAccount = () => {
                 <p>You won't be able to change your username later.</p>
               </SectionMessage>
               <Gap />
-              
+
               <Field name='username' label='Username' isRequired>
                 {({ fieldProps, error }) => (
                   <>
                     <TextField {...fieldProps} />
-                    { error && <ErrorMessage>{error}</ErrorMessage>}
+                    {error && <ErrorMessage>{error}</ErrorMessage>}
                   </>
                 )}
               </Field>

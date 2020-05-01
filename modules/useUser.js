@@ -6,7 +6,6 @@ import firebase from './firebase'
  */
 const useUser = (username, uid) => {
   const [user, setUser] = useState(null)
-  const [data, setData] = useState(null)
   const [error, setError] = useState(null)
 
   useEffect(() => {

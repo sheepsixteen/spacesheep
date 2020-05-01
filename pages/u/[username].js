@@ -9,28 +9,30 @@ import styled from 'styled-components'
 import EmptyState from '@atlaskit/empty-state'
 import Link from 'next/link'
 import { Button } from '@atlaskit/button/dist/cjs/components/Button'
+import MissionCard from '../../components/MissionCard'
 
 const UserPage = () => {
   const router = useRouter()
   const { username } = router.query
-  const { user, data } = useAuth()
-  
+  const { data } = useAuth()
+
   // User data
   const [userContent, setUserContent] = useState(null)
 
   // Entities the user has interacted with
   const [interactedEntities, setInteractedEntities] = useState(null)
-  
+
   // Current page belongs to the signed-in user
   const [isMe, setIsMe] = useState(null)
 
   useEffect(() => {
-    if (user && (username === user.username)) {
+    if (data && (username === data.username)) {
       setIsMe(true)
     } else {
+      console.log('yes')
       setIsMe(false)
     }
-  }, [username, user])
+  }, [username, data])
 
   // Load user content for page
   useEffect(() => {
@@ -72,7 +74,7 @@ const UserPage = () => {
 
     if (data) {
       getInteractedEntities(username)
-      
+
       // If signed in and username is my username load my content
       if (data.username === username) {
         setUserContent(data)
@@ -83,7 +85,7 @@ const UserPage = () => {
         getUserContent(username)
       }
     }
-    
+
     // If not signed in, get the user content
     if (data === false) {
       getInteractedEntities(username)
@@ -108,7 +110,7 @@ const UserPage = () => {
   return (
     <Layout title={userContent.username}>
       <Grid>
-        <ProfileData {...userContent} />
+        <ProfileData isMe={isMe} {...userContent} />
 
         <div>
           {interactedEntities && interactedEntities.map(x => <MissionCard key={x.id} id={x.id} {...x.data()} />)}
@@ -119,28 +121,23 @@ const UserPage = () => {
             </SectionMessage>
           )}
 
-          {isMe &&(interactedEntities.length === 0) && (
-              <EmptyState
-                header='No starred missions'
-                description="You haven't starred any missions, when you star a few, they'll appear here."
-                imageUrl='https://assets-ouch.icons8.com/preview/565/06ac6cf9-cb9e-415a-b529-e774069c0eed.png'
-                primaryAction={
-                  <Link href='/missions'>
-                    <Button appearance='primary'>Go to missions</Button>
-                  </Link>
-                }
-              />
-            )}
+          {isMe && (interactedEntities.length === 0) && (
+            <EmptyState
+              header='No starred missions'
+              description="You haven't starred any missions, when you star a few, they'll appear here."
+              imageUrl='https://assets-ouch.icons8.com/preview/565/06ac6cf9-cb9e-415a-b529-e774069c0eed.png'
+              primaryAction={
+                <Link href='/missions'>
+                  <Button appearance='primary'>Go to missions</Button>
+                </Link>
+              }
+            />
+          )}
         </div>
       </Grid>
     </Layout>
   )
 }
-
-
-const Gap = styled.div`
-  padding: .5rem 0;
-`
 
 const Grid = styled.div`
   display: grid;

@@ -4,8 +4,6 @@ import 'firebase/auth'
 import 'firebase/analytics'
 import 'firebase/firestore'
 import 'firebase/functions'
-import * as axios from 'axios'
-
 
 if (!firebase.apps.length) {
   firebase.initializeApp({
@@ -22,15 +20,14 @@ if (!firebase.apps.length) {
   // If on client-side
   if (typeof window !== 'undefined') {
     firebase.analytics()
-  }
 
-  var db = firebase.firestore()
-  if (location.hostname === "localhost") {
-    db.settings({
-      host: "localhost:8080",
-      ssl: false
-    })
-    firebase.functions().useFunctionsEmulator("http://localhost:5001")
+    if (window.location.hostname === 'localhost') {
+      firebase.firestore().settings({
+        host: 'localhost:8080',
+        ssl: false
+      })
+      firebase.functions().useFunctionsEmulator('http://localhost:5001')
+    }
   }
 }
 
