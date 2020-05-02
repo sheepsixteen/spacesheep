@@ -30,7 +30,8 @@ const CreateAccount = () => {
   async function createAccount (data) {
     return firebase.functions()
       .httpsCallable('setUsername')({
-        username: data.username
+        username: data.username,
+        picture: data.picture
       })
       .then(() => {
         router.push('/u')

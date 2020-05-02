@@ -8,7 +8,7 @@ import firebase from '../modules/firebase'
  */
 export const useInteraction = (eid) => {
   const [interaction, setInteraction] = useState(null)
-  const { user, data: userdata } = useAuth()
+  const { user } = useAuth()
 
   function updateInteraction (data) {
     setInteraction(data)
@@ -20,7 +20,7 @@ export const useInteraction = (eid) => {
       // writing, saving some time.
       .doc(`interactions/${user.uid + eid}`)
       .set({
-        username: userdata.username,
+        uid: user.uid,
         eid,
         ...data
       }, { merge: true })
@@ -31,7 +31,7 @@ export const useInteraction = (eid) => {
 
     function handleInteractionSnapshot (snapshot) {
       if (snapshot.empty) {
-        setInteraction(false)
+        return setInteraction(false)
       }
 
       const doc = snapshot.docs[0]

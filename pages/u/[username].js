@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import EmptyState from '@atlaskit/empty-state'
 import Link from 'next/link'
 import { Button } from '@atlaskit/button/dist/cjs/components/Button'
-import MissionCard from '../../components/MissionCard'
+import Interaction from '../../components/Interaction'
 
 const UserPage = () => {
   const router = useRouter()
@@ -29,7 +29,6 @@ const UserPage = () => {
     if (data && (username === data.username)) {
       setIsMe(true)
     } else {
-      console.log('yes')
       setIsMe(false)
     }
   }, [username, data])
@@ -37,61 +36,32 @@ const UserPage = () => {
   // Load user content for page
   useEffect(() => {
     function getUserContent (username) {
-      console.log(username)
       firebase.firestore()
         .collection('users')
         .where('username', '==', username)
         .get()
         .then(snapshot => {
-          const user = snapshot.docs[0]
-
-          if (user !== undefined) {
-            setUserContent(user.data())
-          } else {
+          if (snapshot.empty) {
             setUserContent(false)
+          } else {
+            setUserContent(snapshot.docs[0].data())
           }
-        })
-    }
 
-    function getInteractedEntities (username) {
-      firebase.firestore()
-        .collection('/interactions')
-        .where('username', '==', username)
-        .get()
+          // get interactions
+          return firebase.firestore()
+            .collection('interactions')
+            .where('uid', '==', snapshot.docs[0].id)
+            .get()
+        })
         .then(snapshot => {
-          var interactedEntitiesPromises = snapshot.docs.map(doc => firebase.firestore().doc(`/entities/${doc.data().eid}`).get())
-          Promise.all(interactedEntitiesPromises)
-            .then(entities => setInteractedEntities(entities))
-        })
-        .catch(err => {
-          console.log(err)
+          setInteractedEntities(snapshot.docs.map(e => e))
         })
     }
 
-    if (userContent && interactedEntities) {
-      return
-    }
-
-    if (data) {
-      getInteractedEntities(username)
-
-      // If signed in and username is my username load my content
-      if (data.username === username) {
-        setUserContent(data)
-      }
-
-      // If signed in and username is not my username, load content
-      if (data.username !== username) {
-        getUserContent(username)
-      }
-    }
-
-    // If not signed in, get the user content
-    if (data === false) {
-      getInteractedEntities(username)
+    if (username) {
       getUserContent(username)
     }
-  }, [username, data])
+  }, [username])
 
   if (userContent === null || interactedEntities === null) {
     return <Layout title='Profile' loading />
@@ -113,7 +83,14 @@ const UserPage = () => {
         <ProfileData isMe={isMe} {...userContent} />
 
         <div>
-          {interactedEntities && interactedEntities.map(x => <MissionCard key={x.id} id={x.id} {...x.data()} />)}
+          {interactedEntities && (
+            <>
+              <h2 style={{ marginBottom: '1rem' }}>Starred missions</h2>
+              {interactedEntities.map(x => (
+                <Interaction key={x.id} {...x.data()} />
+              ))}
+            </>
+          )}
 
           {interactedEntities.length === 0 && (
             <SectionMessage>

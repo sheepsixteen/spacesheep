@@ -1,16 +1,10 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
+const importMissions = require('./importMissions')
 
 admin.initializeApp()
 
-exports.getUsers = functions.https.onRequest((req, res) => {
-  admin.firestore()
-    .collection('users')
-    .get()
-    .then(data => {
-      res.jsonp(data.docs.map(x => ({ id: x.id, data: x.data() })))
-    })
-})
+exports.importMissions = importMissions.importMissions
 
 /**
  * Gives a user a uid
