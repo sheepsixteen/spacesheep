@@ -83,8 +83,6 @@ function useProvideAuth () {
   // redirect to /create-account
   useEffect(() => {
     if (user && (data === false)) {
-      console.log('Logged in user but no data.')
-      console.log({ user, data })
       router.push('/create-account')
     }
   }, [user, data])

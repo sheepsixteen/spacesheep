@@ -15,7 +15,6 @@ const uiConfig = {
 }
 
 const SignUp = () => {
-  // TODO: handle error
   const { user } = useAuth()
 
   useEffect(() => {

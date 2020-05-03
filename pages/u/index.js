@@ -3,7 +3,7 @@ import { useAuth } from '../../modules/useAuth'
 import { useEffect } from 'react'
 
 const RedirectToProfile = () => {
-  const { data } = useAuth()
+  const { user, data } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
@@ -11,10 +11,14 @@ const RedirectToProfile = () => {
       router.push(`/u/${data.username}`)
     }
 
-    if (data === false) {
+    if (user && !data) {
+      router.push('/create-account')
+    }
+
+    if (!user) {
       router.push('/signup')
     }
-  }, [data])
+  }, [user, data])
 
   return null
 }
