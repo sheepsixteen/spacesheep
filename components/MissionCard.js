@@ -6,6 +6,8 @@ import TagGroup from '@atlaskit/tag-group'
 import { BreadcrumbsStateless, BreadcrumbsItem } from '@atlaskit/breadcrumbs'
 import Difficulty from './Difficulty'
 import Star from './Star'
+import WorkingStatus from './WorkingStatus'
+import { ButtonGroup } from '@atlaskit/button'
 
 // TODO: Make link be on the entire card except for the button (right now its just the text)
 
@@ -47,9 +49,12 @@ const MissionCard = ({
         </TagGroup>
       </div>
 
-      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-        <Star eid={id} />
-      </div>
+      <CardActions>
+        <ButtonGroup>
+          <WorkingStatus eid={id} />
+          <Star eid={id} />
+        </ButtonGroup>
+      </CardActions>
     </Card>
   )
 }
@@ -59,6 +64,7 @@ const Card = styled.div`
   grid-template-rows: 1fr auto;
   border: 1px solid #eee;
   border-left: 4px solid ${props => randomColor({ seed: props.id })};
+  align-items: center;
 
   padding: 1rem;
   margin-top: -1px;
@@ -74,6 +80,13 @@ const Card = styled.div`
   @media screen and (min-width: 30em) {
     grid-template-columns: 1fr auto;
   }
+`
+
+const CardActions = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 1rem;
 `
 
 export default MissionCard
