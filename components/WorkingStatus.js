@@ -50,7 +50,7 @@ const WorkingStatus = ({ eid }) => {
   ]
 
   if (!user) {
-    return <div />
+    return null
   }
 
   return (
