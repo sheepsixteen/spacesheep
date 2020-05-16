@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2020-05-16
+### Added
+- Working status (not started, in progress, done)
+### Changed
+- Default profile picture (this is a temp fix)
+- Fix redirect bug (https://github.com/sheepsixteen/spacesheep/commit/55cd7df)
+### Removed
+- Temporary homepage
+
 ## [1.2.0] - 2020-04-26
 *This update was a real headache so please be nice to me for the next couple of days*
 ### Added 
