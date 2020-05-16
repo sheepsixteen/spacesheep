@@ -7,6 +7,7 @@ import useMission from '../../modules/useMission'
 import MissionCard from '../../components/MissionCard'
 import YourSolution from '../../components/YourSolution'
 import CommunitySolutions from '../../components/CommunitySolutions'
+import { codeFontFamily } from '@atlaskit/theme'
 
 // TODO: add field validation
 // TODO: split this into components
@@ -29,30 +30,47 @@ const MissionPage = () => {
     <Layout title={mission.title}>
       <MissionCard noCard id={missionSnapshot.id} {...mission} />
 
-      <div style={{ marginTop: '1.5rem', maxWidth: '60rem' }} dangerouslySetInnerHTML={{ __html: content }} />
+      <MissionGrid>
+        <MissionContent>
+          <div style={{ fontFamily: codeFontFamily() }} dangerouslySetInnerHTML={{ __html: content }} />
+        </MissionContent>
 
-      <Gap />
-
-      <Tabs
-        selected={selectedTab}
-        onSelect={(selected, i) => setSelectedTab(i)}
-        tabs={[
-          {
-            label: 'Your solution',
-            content: <YourSolution mid={missionSnapshot.id} />
-          },
-          {
-            label: 'Community solutions',
-            content: <CommunitySolutions mid={missionSnapshot.id} />
-          }
-        ]}
-      />
+        <Tabs
+          selected={selectedTab}
+          onSelect={(selected, i) => setSelectedTab(i)}
+          tabs={[
+            {
+              label: 'Your solution',
+              content: <YourSolution mid={missionSnapshot.id} />
+            },
+            {
+              label: 'Community solutions',
+              content: <CommunitySolutions mid={missionSnapshot.id} />
+            }
+          ]}
+        />
+      </MissionGrid>
     </Layout>
   )
 }
 
-const Gap = styled.div`
-  padding: 1rem 0;
+const MissionContent = styled.div`
+  border: 1px solid #aaa;
+  padding: 24px 24px 40px;
+  border-radius: 2px;
+  max-width: 60em;
+  margin: 1rem auto;
+`
+
+const MissionGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 1rem;
+  margin-top: 1rem;
+
+  @media screen and (min-width: 690px) {
+    grid-template-columns: 2fr 1fr;
+  }
 `
 
 export default MissionPage
