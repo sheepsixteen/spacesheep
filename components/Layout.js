@@ -11,6 +11,7 @@ const Layout = ({ title, loading = false, children }) => (
       <title>{title} | SpaceSheep</title>
       <meta name='viewport' content='initial-scale=1.0, width=device-width, user-scalable=no, minimal-ui' />
       <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@atlaskit/css-reset@5.0.10/dist/bundle.css' />
+      <link rel='icon' href='https://img.icons8.com/doodle/2x/sci-fi.png' type='image/png' />
     </Head>
 
     <GlobalStyle />

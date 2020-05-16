@@ -34,7 +34,7 @@ const Nav = () => {
         </Link>
 
         <Links>
-          {(width < '690') && (
+          {(width <= '690') && (
             navbarIsOpen
               ? <div onClick={e => setNavbarIsOpen(false)}><CrossIcon /></div>
               : <div onClick={e => setNavbarIsOpen(true)}><MenuIcon /></div>
@@ -90,7 +90,7 @@ const Nav = () => {
                       {...triggerProps}
                     >
                       <Avatar
-                        src={data.picture}
+                        src={data.picture || 'https://www.thispersondoesnotexist.com/image'}
                         onClick={() => setPopupIsOpen(!popupIsOpen)}
                       />
                     </div>
