@@ -17,8 +17,10 @@ const WorkingStatus = ({ eid }) => {
   const [status, setStatus] = useState(0)
 
   useEffect(() => {
-    if (interaction) {
+    if (interaction && interaction.workingStatus) {
       setStatus(interaction.workingStatus)
+    } else {
+      setStatus(0)
     }
   }, [interaction])
 
