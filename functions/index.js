@@ -1,10 +1,9 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
-const importMissions = require('./importMissions')
 
 admin.initializeApp()
 
-exports.importMissions = importMissions.importMissions
+exports.importDummy = require('./importDummy').importDummy
 
 /**
  * Gives a user a uid
