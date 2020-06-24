@@ -1,8 +1,8 @@
-import styled from 'styled-components'
-import Gist from 'react-gist'
-import { useState } from 'react'
 import Button from '@atlaskit/button'
 import moment from 'moment'
+import { useState } from 'react'
+import Gist from 'react-gist'
+import styled from 'styled-components'
 
 // TODO: add link to user's profile
 // TODO: add avatar (?)
@@ -12,19 +12,19 @@ const Solution = ({ id, gist, username, gist_submitted: gistSubmitted }) => {
   return (
     <Card>
       <CardHeader>
-        <p>
-          Solution by {username}
-        </p>
-        <Button onClick={e => setIsOpen(!isOpen)} appearance='subtle' style={{ float: 'right' }}>
+        <p>Solution by {username}</p>
+        <Button
+          onClick={(e) => setIsOpen(!isOpen)}
+          appearance="subtle"
+          style={{ float: 'right' }}
+        >
           {isOpen ? 'Hide code' : 'Show code'}
         </Button>
       </CardHeader>
       <CardBody>
         {!isOpen ? (
-          <Hider isHiding onClick={e => setIsOpen(true)}>
-            <Overlayer>
-              Show full code
-            </Overlayer>
+          <Hider isHiding onClick={(e) => setIsOpen(true)}>
+            <Overlayer>Show full code</Overlayer>
             <Gist id={gist} />
           </Hider>
         ) : (
@@ -48,7 +48,7 @@ const Card = styled.div`
 
 const CardHeader = styled.div`
   background-color: #f6f6f6;
-  padding: .5rem;
+  padding: 0.5rem;
   border-bottom: 1px solid #eee;
 
   display: flex;
@@ -57,12 +57,12 @@ const CardHeader = styled.div`
 `
 
 const CardBody = styled.div`
-  padding: .5rem;
+  padding: 0.5rem;
 `
 
 const CardFooter = styled.div`
   background-color: #f6f6f6;
-  padding: .5rem;
+  padding: 0.5rem;
   border-top: 1px solid #eee;
 `
 

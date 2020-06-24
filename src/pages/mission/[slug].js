@@ -16,7 +16,6 @@ import * as MarkdownIt from 'markdown-it'
 // import styles from './Mission.module.sass'
 // import Actions from '../../components/Mission/Actions'
 // import { BreadcrumbsStateless, BreadcrumbsItem } from '@atlaskit/breadcrumbs'
-
 import MissionScreen from 'screens/MissionScreen'
 import firebase from 'util/firebase'
 

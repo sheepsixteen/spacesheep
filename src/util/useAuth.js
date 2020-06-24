@@ -1,43 +1,11 @@
 // (almost) copy-pasted from https://usehooks.com/useAuth/ and /useRequireAuth/
-// thanks
-import React, { useEffect, useContext, createContext, useReducer } from 'react'
-import firebase from '../util/firebase'
+
 import { useRouter } from 'next/router'
-
-const authContext = createContext()
-const authLoadingContext = createContext()
-
-// Provider component that wraps your app and makes auth object
-// available to any child component that calls useAuth().
-export function ProvideAuth({ children }) {
-  const auth = useProvideAuth()
-  return (
-    <authContext.Provider value={auth.user}>{children}</authContext.Provider>
-  )
-}
-
-export function ProvideAuthLoading({ children }) {
-  const auth = useProvideAuth()
-  return (
-    <authLoadingContext.Provider value={auth.isLoading}>
-      {children}
-    </authLoadingContext.Provider>
-  )
-}
-
-/**
- * Hook for child components to get the auth object and re-render when it changes.
- */
-export const useAuth = () => {
-  return useContext(authContext)
-}
-
-export const useAuthLoading = () => {
-  return useContext(authLoadingContext)
-}
+import { useEffect, useReducer } from 'react'
+import { createContainer } from 'react-tracked'
+import firebase from 'util/firebase'
 
 const authReducer = (state, [type, payload]) => {
-  console.log({ type, payload })
   switch (type) {
     case 'AUTH_STATE_CHANGED':
       return {
@@ -48,15 +16,13 @@ const authReducer = (state, [type, payload]) => {
     case 'USER_DATA_FETCHED':
       return {
         ...state,
-        userData: payload.exists
-          ? { ...payload.data(), uid: payload.id }
-          : false,
+        user: payload.exists ? { ...payload.data(), uid: payload.id } : false,
         isLoading: false,
       }
     case 'SIGNED_OUT':
       return {
         authUser: null,
-        userData: null,
+        user: null,
         isLoading: false,
       }
     case 'AUTH_ERROR':
@@ -81,7 +47,7 @@ function useProvideAuth() {
   const router = useRouter()
   const [state, dispatch] = useReducer(authReducer, {
     authUser: null,
-    userData: null,
+    user: null,
     isLoading: true,
     error: null,
   })
@@ -103,7 +69,7 @@ function useProvideAuth() {
 
   // When signed in, subscribe to user data
   useEffect(() => {
-    var unsubscribe = () => {}
+    let unsubscribe = () => {}
 
     if (state.authUser) {
       unsubscribe = firebase
@@ -123,18 +89,24 @@ function useProvideAuth() {
   useEffect(() => {
     if (
       state.authUser && // if signed in
-      !state.userData && // no userData
+      !state.user && // no user
       !state.isLoading // and not loading
     ) {
       router.push('/create-account') // go to create-account
     }
-  }, [state.authUser, state.userData])
+  }, [state.authUser, state.user])
 
   // Return the auth state
-  return {
-    user: state.userData,
-    authUser: state.authUser,
-    isLoading: state.isLoading,
-    error: state.error,
-  }
+  return [
+    state,
+    () =>
+      new Error(
+        '(in useAuth) You seem to be trying to update the user object through the useAuth hook, please update using firebase.auth() instead.'
+      ),
+  ]
 }
+
+const { Provider, useTrackedState } = createContainer(useProvideAuth)
+
+export default useTrackedState as default
+export { Provider as AuthProvider }

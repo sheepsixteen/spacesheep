@@ -7,9 +7,7 @@ const Source = ({ source }) => {
     <ul className="breadcrumbs">
       {source.map((x, i) => (
         <li className="breadcrumb" key={'breadcrumb' + i}>
-          <a href={x.href}>
-            {x.label}
-          </a>
+          <a href={x.href}>{x.label}</a>
         </li>
       ))}
 
@@ -32,11 +30,11 @@ const Source = ({ source }) => {
         }
 
         .breadcrumb + .breadcrumb {
-          padding-left: .4rem;
+          padding-left: 0.4rem;
         }
 
         .breadcrumb + .breadcrumb::before {
-          padding-right: .4rem;
+          padding-right: 0.4rem;
           display: inline-block;
           content: '/';
           color: ${theme.colors.subtleHeader};

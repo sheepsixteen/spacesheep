@@ -1,8 +1,10 @@
+import { useEffect, useState } from 'react'
+
 import firebase from './firebase'
-import { useState, useEffect } from 'react'
 
 export const getEntities = async (type) =>
-  firebase.firestore()
+  firebase
+    .firestore()
     .collection('entities')
     .where('type', '==', type)
     .orderBy('title')
@@ -11,7 +13,7 @@ export const getEntities = async (type) =>
 /**
  * useEntities gets entities from the database
  * @param {String} type The type of entity to bring
- * @returns {Array} docs that match that type (not data)
+ * @return {Array} docs that match that type (not data)
  */
 export const useEntities = (type) => {
   const [entities, setEntities] = useState(null)
@@ -19,8 +21,8 @@ export const useEntities = (type) => {
 
   useEffect(() => {
     getEntities(type)
-      .then(entities => setEntities(entities.docs))
-      .catch(err => setError(err))
+      .then((entities) => setEntities(entities.docs))
+      .catch((err) => setError(err))
   }, [])
 
   return { entities, error }

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+
 import firebase from '../util/firebase'
 import MissionCard from './MissionCard'
 
@@ -7,10 +8,11 @@ const Interaction = (props) => {
   const [mission, setMission] = useState(null)
 
   useEffect(() => {
-    firebase.firestore()
+    firebase
+      .firestore()
       .doc('entities/' + props.eid)
       .get()
-      .then(snapshot => {
+      .then((snapshot) => {
         setMission(snapshot)
       })
   }, [])
@@ -19,9 +21,7 @@ const Interaction = (props) => {
     return null
   }
 
-  return (
-    <MissionCard id={mission.id} {...mission.data()} />
-  )
+  return <MissionCard id={mission.id} {...mission.data()} />
 }
 
 Interaction.propTypes = {
@@ -45,7 +45,7 @@ Interaction.propTypes = {
   /**
    * Whether to show the mission on the user's public profile
    */
-  isPublic: PropTypes.bool
+  isPublic: PropTypes.bool,
 }
 
 // {"eid":"qLF2ghoJTMwg07183PtA","gist":"aaab3fed1ee13b8e194a28ea9fad597e","gist_submitted":{"seconds":1588448667,"nanoseconds":441000000},"isPublic":true,"isStarred":true,"uid":"nrgA4mjeb2N5wAMz2MIihY5kWb22"}

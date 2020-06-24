@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 // From: https://usehooks.com/useWindowSize/ Note: for some reason, putting
 // getSize in useState like this: useState(getSize) makes it render weirdly?

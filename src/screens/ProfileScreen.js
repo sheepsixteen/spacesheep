@@ -1,17 +1,18 @@
-import Layout from '../components/Layout'
-import { useState } from 'react'
-import { useAuth } from 'util/useAuth'
-import Button from '@atlaskit/button'
-import EditIcon from '@atlaskit/icon/glyph/edit'
 import Avatar from '@atlaskit/avatar'
+import Button from '@atlaskit/button'
+import Flag, { AutoDismissFlag, FlagGroup } from '@atlaskit/flag'
+import Tick from '@atlaskit/icon/glyph/check-circle'
+import EditIcon from '@atlaskit/icon/glyph/edit'
 import { ModalTransition } from '@atlaskit/modal-dialog'
 import { EditProfile } from 'components/Profile'
-import Flag, { FlagGroup, AutoDismissFlag } from '@atlaskit/flag'
-import Tick from '@atlaskit/icon/glyph/check-circle'
+import { useState } from 'react'
+import useAuth from 'util/useAuth'
+
+import Layout from '../components/Layout'
 
 const ProfileScreen = ({ profile }) => {
   const { username, fullname, picture, bio, github, website } = profile
-  const user = useAuth()
+  const { user } = useAuth()
   const isInteractive = user ? user.uid === profile.uid : false
   const [isEditing, setIsEditing] = useState(false)
 
@@ -66,7 +67,11 @@ const ProfileScreen = ({ profile }) => {
 
       <ModalTransition>
         {isEditing && (
-          <EditProfile uid={user.uid} profile={profile} onClose={e => setIsEditing(false)} />
+          <EditProfile
+            uid={user.uid}
+            profile={profile}
+            onClose={(e) => setIsEditing(false)}
+          />
         )}
       </ModalTransition>
     </Layout>

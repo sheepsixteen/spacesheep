@@ -1,8 +1,7 @@
-import PropTypes from 'prop-types'
 import Button from '@atlaskit/button'
-
-import StarFilled from '@atlaskit/icon/glyph/star-filled'
 import StarOutline from '@atlaskit/icon/glyph/star'
+import StarFilled from '@atlaskit/icon/glyph/star-filled'
+import PropTypes from 'prop-types'
 
 const Star = ({ interaction, setInteraction, _isStarred }) => {
   if (interaction === null) {

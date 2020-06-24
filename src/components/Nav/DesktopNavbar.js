@@ -1,22 +1,21 @@
-import Logo from 'components/Logo'
-import Link from 'next/link'
-import Button from '@atlaskit/button'
-import { useAuth, useAuthLoading } from 'util/useAuth'
 import Avatar, { Skeleton } from '@atlaskit/avatar'
-import Popup from '@atlaskit/popup'
+import Button from '@atlaskit/button'
 import Dropdown, {
-  DropdownItemGroup,
   DropdownItem,
+  DropdownItemGroup,
 } from '@atlaskit/dropdown-menu'
 import DropdownMenu from '@atlaskit/dropdown-menu'
-import theme from 'styles/theme'
-import firebase from 'util/firebase'
 import ChevronDownIcon from '@atlaskit/icon/glyph/chevron-down'
 import { ExitingPersistence, SlideIn } from '@atlaskit/motion'
+import Popup from '@atlaskit/popup'
+import Logo from 'components/Logo'
+import Link from 'next/link'
+import theme from 'styles/theme'
+import firebase from 'util/firebase'
+import useAuth from 'util/useAuth'
 
 const DesktopNavbar = () => {
-  const user = useAuth()
-  const isLoading = useAuthLoading()
+  const { user } = useAuth()
 
   return (
     <>
@@ -36,7 +35,11 @@ const DesktopNavbar = () => {
         {user ? (
           <DropdownMenu
             trigger={
-              <Button appearance="subtle-link">
+              <Button
+                label="Profile"
+                aria-label="Profile"
+                appearance="subtle-link"
+              >
                 <Avatar appearance="square" size="small" src={user.picture} />
                 <ChevronDownIcon primaryColor="white" />
               </Button>
@@ -57,11 +60,11 @@ const DesktopNavbar = () => {
           </DropdownMenu>
         ) : (
           <>
-            <Link href="/signup" passHref>
-              <a className="link border">Sign Up</a>
-            </Link>
             <Link href="/login" passHref>
               <a className="link">Login</a>
+            </Link>
+            <Link href="/signup" passHref>
+              <a className="link border">Sign Up</a>
             </Link>
           </>
         )}

@@ -1,13 +1,19 @@
-import firebase from '../util/firebase'
+import SectionMessage from '@atlaskit/section-message'
+import Spinner from '@atlaskit/spinner'
 import { useCollectionDataOnce } from 'react-firebase-hooks/firestore'
 import styled from 'styled-components'
-import Spinner from '@atlaskit/spinner'
-import SectionMessage from '@atlaskit/section-message'
+
+import firebase from '../util/firebase'
 import Solution from './Solution'
 
 const CommunitySolutions = ({ mid }) => {
-  const [solutions, loading, error] = useCollectionDataOnce(
-    firebase.firestore()
+  const [
+    solutions,
+    loading,
+    error,
+  ] = useCollectionDataOnce(
+    firebase
+      .firestore()
       .collection('interactions')
       .where('eid', '==', mid)
       .where('isPublic', '==', true)
@@ -26,7 +32,7 @@ const CommunitySolutions = ({ mid }) => {
   if (error) {
     return (
       <div style={{ width: '100%', padding: '2rem 0' }}>
-        <SectionMessage appearance='error'>
+        <SectionMessage appearance="error">
           <p>There was a problem loading the solutions.</p>
         </SectionMessage>
       </div>
@@ -36,7 +42,7 @@ const CommunitySolutions = ({ mid }) => {
   return (
     <div style={{ width: '100%' }}>
       <Gap />
-      {solutions.map(solution => (
+      {solutions.map((solution) => (
         <Solution key={solution.id} {...solution} />
       ))}
     </div>
@@ -44,7 +50,7 @@ const CommunitySolutions = ({ mid }) => {
 }
 
 const Gap = styled.div`
-  padding: .5rem 0;
+  padding: 0.5rem 0;
 `
 
 export default CommunitySolutions

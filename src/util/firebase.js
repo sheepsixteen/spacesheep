@@ -1,10 +1,11 @@
-import * as firebase from 'firebase/app'
 import 'firebase/database'
 import 'firebase/auth'
 import 'firebase/analytics'
 import 'firebase/firestore'
 import 'firebase/functions'
 import 'firebase/storage'
+
+import * as firebase from 'firebase/app'
 
 if (!firebase.apps.length) {
   firebase.initializeApp({

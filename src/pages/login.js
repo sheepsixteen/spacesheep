@@ -1,10 +1,11 @@
 import Router from 'next/router'
 import { useEffect } from 'react'
-import { useAuth } from '../util/useAuth'
 import LoginScreen from 'screens/LoginScreen'
 
+import useAuth from '../util/useAuth'
+
 const Login = () => {
-  const user = useAuth()
+  const { user } = useAuth()
 
   useEffect(() => {
     if (user) {

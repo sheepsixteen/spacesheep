@@ -1,18 +1,18 @@
-import Item from '../elements/Card/Item'
-
-import Link from 'next/link'
-import { BreadcrumbsStateless, BreadcrumbsItem } from '@atlaskit/breadcrumbs'
-import Tag from 'elements/Tag'
-import MissionIcon from 'elements/MissionIcon'
-import { Star, WorkStatus } from './Interactions'
-import { useInteraction } from 'util/useInteraction'
+import { BreadcrumbsItem, BreadcrumbsStateless } from '@atlaskit/breadcrumbs'
 import { ButtonGroup } from '@atlaskit/button'
-import { useAuth } from 'util/useAuth'
-import Source from 'elements/Source'
 import { fontSize } from '@atlaskit/theme'
+import MissionIcon from 'elements/MissionIcon'
+import Source from 'elements/Source'
+import Tag from 'elements/Tag'
+import Link from 'next/link'
+import useAuth from 'util/useAuth'
+import { useInteraction } from 'util/useInteraction'
+
+import Item from '../elements/Card/Item'
+import { Star, WorkStatus } from './Interactions'
 
 const MissionItem = ({ id, title, source, tags, slug }) => {
-  const user = useAuth()
+  const { user } = useAuth()
   const [interaction, setInteraction] = useInteraction(id)
 
   return (
@@ -62,8 +62,8 @@ const MissionItem = ({ id, title, source, tags, slug }) => {
           justify-self: end;
         }
         .title {
-          font-size: ${fontSize()*1.3}px;
-          margin: .2rem 0;
+          font-size: ${fontSize() * 1.3}px;
+          margin: 0.2rem 0;
         }
 
         @media screen and (min-width: 690px) {

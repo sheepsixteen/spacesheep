@@ -1,13 +1,5 @@
-import Layout from '../components/Layout'
-import SectionMessage from '@atlaskit/section-message'
+import HomeScreen from 'screens/HomeScreen'
 
-const Home = () => (
-  <Layout title='Home'>
-    <SectionMessage>
-      <h3>Coming Soon</h3>
-      <p>We're still working on making SpaceSheep. Come back later?</p>
-    </SectionMessage>
-  </Layout>
-)
+const Home = () => <HomeScreen />
 
 export default Home

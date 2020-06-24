@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+
 import firebase from './firebase'
 
 /**
@@ -9,9 +10,10 @@ const useUser = (username, uid) => {
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    async function getUserByUsername (username) {
+    async function getUserByUsername(username) {
       try {
-        const user = await firebase.firestore()
+        const user = await firebase
+          .firestore()
           .collection('users')
           .where('username', '==', username)
           .get()
@@ -21,8 +23,8 @@ const useUser = (username, uid) => {
       } catch (e) {
         console.error(e)
         setError({
-          message: 'Couldn\'t find a user with that username.',
-          error: e
+          message: "Couldn't find a user with that username.",
+          error: e,
         })
       }
     }

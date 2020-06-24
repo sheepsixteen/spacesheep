@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router'
-import { useAuth } from '../util/useAuth'
 import { useEffect } from 'react'
 
+import useAuth from '../util/useAuth'
+
 const RedirectToProfile = () => {
-  const user = useAuth()
+  const { user } = useAuth()
   const router = useRouter()
 
   useEffect(() => {

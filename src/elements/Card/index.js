@@ -3,9 +3,7 @@ import theme from 'styles/theme'
 
 import Item from './Item'
 
-export {
-  Item as CardItem
-}
+export { Item as CardItem }
 
 const Card = (props) => {
   return (
@@ -17,14 +15,15 @@ const Card = (props) => {
       <style jsx>{`
         .card {
           border-radius: 4px;
-          border: 1px solid ${theme.colors.border}
+          border: 1px solid ${theme.colors.border};
         }
 
         .card-header {
           background-color: ${theme.colors.darkerBackground};
           padding: 12px;
           border-bottom: 1px solid ${theme.colors.border};
-        }`}</style>
+        }
+      `}</style>
     </div>
   )
 }

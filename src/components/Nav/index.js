@@ -1,11 +1,11 @@
-import useWindowSize from '../../util/useWindowSize'
+import { ExitingPersistence, FadeIn, SlideIn } from '@atlaskit/motion'
+import { useEffect } from 'react'
 import theme from 'styles/theme'
+import useAuth from 'util/useAuth'
 
+import useWindowSize from '../../util/useWindowSize'
 import DesktopNavbar from './DesktopNavbar'
 import MobileNavbar from './MobileNavbar'
-import { useAuthLoading, useAuth } from 'util/useAuth'
-import { useEffect } from 'react'
-import { ExitingPersistence, SlideIn, FadeIn } from '@atlaskit/motion'
 
 const pages = [
   { label: 'Missions', href: '/missions' },
@@ -15,20 +15,18 @@ const pages = [
 
 const Nav = () => {
   const { width } = useWindowSize()
-  const isLoading = useAuthLoading()
+  const { isLoading } = useAuth()
 
-  
   return (
-    <div className="navbar">
+    <nav className="navbar">
       <ExitingPersistence exitThenEnter>
         {!isLoading && (
           <FadeIn enterFrom="top" exitTo="top">
             {(props) => (
               <div {...props}>
-
-              <div className="content">
-                {width <= '690' ? <MobileNavbar /> : <DesktopNavbar />}
-              </div>
+                <div className="content">
+                  {width <= '690' ? <MobileNavbar /> : <DesktopNavbar />}
+                </div>
               </div>
             )}
           </FadeIn>
@@ -54,7 +52,7 @@ const Nav = () => {
           }
         `}
       </style>
-    </div>
+    </nav>
   )
 }
 

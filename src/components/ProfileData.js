@@ -1,17 +1,18 @@
-import { useAuth } from '../util/useAuth'
-import styled from 'styled-components'
 import Avatar from '@atlaskit/avatar'
-import { useState, useEffect } from 'react'
+import { ButtonGroup } from '@atlaskit/button'
 import { Button } from '@atlaskit/button/dist/cjs/components/Button'
+import Form, { Field, FormFooter } from '@atlaskit/form'
 import EditIcon from '@atlaskit/icon/glyph/edit'
 import TextArea from '@atlaskit/textarea'
-import { ButtonGroup } from '@atlaskit/button'
-import Form, { Field, FormFooter } from '@atlaskit/form'
 import TextField from '@atlaskit/textfield'
 import { fontSize } from '@atlaskit/theme'
+import PropTypes from 'prop-types'
+import { useEffect, useState } from 'react'
 import { FaGithub, FaLink } from 'react-icons/fa'
 import { GoOrganization } from 'react-icons/go'
-import PropTypes from 'prop-types'
+import styled from 'styled-components'
+
+import useAuth from '../util/useAuth'
 
 // props: { fullname, username, bio, github, website, company }
 
@@ -34,55 +35,91 @@ const ProfileData = (props) => {
 
   return (
     <div style={{ maxWidth: '30rem' }}>
-      {(isEditing && props.isMe) ? (
-        <Form onSubmit={data => {
-          setIsEditing(false)
-          const form = {}
-          Object.keys(data).forEach(key => {
-            if (key === 'username') return
-            form[key] = data[key] || null
-          })
-          setUserInfo({ ...form, shouldUpdate: true })
-        }}
+      {isEditing && props.isMe ? (
+        <Form
+          onSubmit={(data) => {
+            setIsEditing(false)
+            const form = {}
+            Object.keys(data).forEach((key) => {
+              if (key === 'username') return
+              form[key] = data[key] || null
+            })
+            setUserInfo({ ...form, shouldUpdate: true })
+          }}
         >
           {({ formProps, submitting }) => (
             <form {...formProps}>
-              <Field name='fullname' label='Full name' defaultValue={userInfo.fullname}>
+              <Field
+                name="fullname"
+                label="Full name"
+                defaultValue={userInfo.fullname}
+              >
+                {({ fieldProps, error }) => <TextField {...fieldProps} />}
+              </Field>
+              <Field
+                isDisabled
+                name="username"
+                label="Username"
+                defaultValue={userInfo.username}
+              >
+                {({ fieldProps, error }) => <TextField {...fieldProps} />}
+              </Field>
+              <Field name="bio" label="Bio" defaultValue={userInfo.bio}>
+                {({ fieldProps, error }) => <TextArea {...fieldProps} />}
+              </Field>
+              <Field
+                name="github"
+                label="Github username"
+                defaultValue={userInfo.github}
+              >
                 {({ fieldProps, error }) => (
-                  <TextField {...fieldProps} />
+                  <TextField
+                    elemBeforeInput={
+                      <FaGithub style={{ paddingLeft: '4px' }} />
+                    }
+                    {...fieldProps}
+                  />
                 )}
               </Field>
-              <Field isDisabled name='username' label='Username' defaultValue={userInfo.username}>
+              <Field
+                name="website"
+                label="Website"
+                defaultValue={userInfo.website}
+              >
                 {({ fieldProps, error }) => (
-                  <TextField {...fieldProps} />
+                  <TextField
+                    elemBeforeInput={<FaLink style={{ paddingLeft: '4px' }} />}
+                    {...fieldProps}
+                  />
                 )}
               </Field>
-              <Field name='bio' label='Bio' defaultValue={userInfo.bio}>
+              <Field
+                name="company"
+                label="Company"
+                defaultValue={userInfo.company}
+              >
                 {({ fieldProps, error }) => (
-                  <TextArea {...fieldProps} />
+                  <TextField
+                    elemBeforeInput={
+                      <GoOrganization style={{ paddingLeft: '4px' }} />
+                    }
+                    {...fieldProps}
+                  />
                 )}
               </Field>
-              <Field name='github' label='Github username' defaultValue={userInfo.github}>
-                {({ fieldProps, error }) => (
-                  <TextField elemBeforeInput={<FaGithub style={{ paddingLeft: '4px' }} />} {...fieldProps} />
-                )}
-              </Field>
-              <Field name='website' label='Website' defaultValue={userInfo.website}>
-                {({ fieldProps, error }) => (
-                  <TextField elemBeforeInput={<FaLink style={{ paddingLeft: '4px' }} />} {...fieldProps} />
-                )}
-              </Field>
-              <Field name='company' label='Company' defaultValue={userInfo.company}>
-                {({ fieldProps, error }) => (
-                  <TextField elemBeforeInput={<GoOrganization style={{ paddingLeft: '4px' }} />} {...fieldProps} />
-                )}
-              </Field>
-              <FormFooter align='start'>
+              <FormFooter align="start">
                 <ButtonGroup>
-                  <Button type='submit' appearance='primary' isLoading={submitting}>
+                  <Button
+                    type="submit"
+                    appearance="primary"
+                    isLoading={submitting}
+                  >
                     Update profile
                   </Button>
-                  <Button onClick={e => setIsEditing(false)} appearance='subtle'>
+                  <Button
+                    onClick={(e) => setIsEditing(false)}
+                    appearance="subtle"
+                  >
                     Cancel
                   </Button>
                 </ButtonGroup>
@@ -92,24 +129,18 @@ const ProfileData = (props) => {
         </Form>
       ) : (
         <>
-          <Avatar src={props.picture} appearance='square' size='xlarge' />
+          <Avatar src={props.picture} appearance="square" size="xlarge" />
 
           {userInfo.fullname && (
-            <h1 style={{ marginTop: '1rem' }}>
-              {userInfo.fullname}
-            </h1>
+            <h1 style={{ marginTop: '1rem' }}>{userInfo.fullname}</h1>
           )}
 
           {userInfo.username && (
-            <h2 style={{ marginTop: '0' }}>
-              @{userInfo.username}
-            </h2>
+            <h2 style={{ marginTop: '0' }}>@{userInfo.username}</h2>
           )}
 
           {userInfo.bio && (
-            <p style={{ fontSize: fontSize() * 1.1 }}>
-              {userInfo.bio}
-            </p>
+            <p style={{ fontSize: fontSize() * 1.1 }}>{userInfo.bio}</p>
           )}
 
           <Gap size={0.5} />
@@ -125,17 +156,13 @@ const ProfileData = (props) => {
           {userInfo.website && (
             <ProfileLink>
               <FaLink />
-              <a href={userInfo.website}>
-                {userInfo.website}
-              </a>
+              <a href={userInfo.website}>{userInfo.website}</a>
             </ProfileLink>
           )}
           {userInfo.company && (
             <ProfileLink>
               <GoOrganization />
-              <a href={userInfo.company}>
-                {userInfo.company}
-              </a>
+              <a href={userInfo.company}>{userInfo.company}</a>
             </ProfileLink>
           )}
 
@@ -143,7 +170,7 @@ const ProfileData = (props) => {
 
           {props.isMe && (
             <Button
-              onClick={e => setIsEditing(true)}
+              onClick={(e) => setIsEditing(true)}
               iconBefore={<EditIcon />}
             >
               Edit Profile
@@ -156,14 +183,14 @@ const ProfileData = (props) => {
 }
 
 const Gap = styled.div`
-  padding: ${props => props.size ? props.size / 2 : '.5'}rem;
+  padding: ${(props) => (props.size ? props.size / 2 : '.5')}rem;
 `
 
 const ProfileLink = styled.p`
   display: flex;
   align-items: center;
-  
-  margin-top: .2rem;
+
+  margin-top: 0.2rem;
 
   &:first-of-type {
     margin-top: 2rem;
@@ -173,7 +200,7 @@ const ProfileLink = styled.p`
     color: red;
   }
 
-  a { 
+  a {
     margin-top: 0;
     margin-left: 4px;
   }
@@ -187,7 +214,7 @@ ProfileData.propTypes = {
   github: PropTypes.string,
   website: PropTypes.string,
   company: PropTypes.string,
-  picture: PropTypes.string
+  picture: PropTypes.string,
 }
 
 export default ProfileData

@@ -1,12 +1,12 @@
+import Footer from 'components/Footer'
+import Navbar from 'components/Nav'
+import Spinner from 'elements/Spinner'
 import Head from 'next/head'
-import Spinner from '@atlaskit/spinner'
-import Navbar from '../Nav'
-import Footer from '../Footer'
 import PropTypes from 'prop-types'
-import styles from './Layout.module.sass'
 
 const Layout = (props) => {
   const { title, isLoading = false, children, hero } = props
+
   return (
     <>
       <Head>
@@ -29,17 +29,17 @@ const Layout = (props) => {
       <div className="wrapper">
         <Navbar />
 
-        <div>
+        <main>
           {hero}
           <div className="container">
             {children}
             {isLoading && (
-              <div className='spinner-container'>
+              <div className="spinner-container">
                 <Spinner size="medium" />
               </div>
             )}
           </div>
-        </div>
+        </main>
 
         <Footer />
       </div>
@@ -51,7 +51,7 @@ const Layout = (props) => {
           width: 95vw;
           max-width: 80rem;
         }
-      
+
         .wrapper {
           height: 100%;
           min-height: 100vh;
@@ -79,7 +79,7 @@ Layout.propTypes = {
   /**
    * Shows a spinner when true
    */
-  loading: PropTypes.bool
+  isLoading: PropTypes.bool,
 }
 
 export default Layout

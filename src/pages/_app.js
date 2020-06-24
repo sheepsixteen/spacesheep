@@ -1,12 +1,22 @@
-import '../styles/styles.sass'
-import { ProvideAuth, ProvideAuthLoading } from '../util/useAuth'
+import '@elastic/eui/dist/eui_theme_amsterdam_light.css'
 
-export default function MyApp ({ Component, pageProps }) {
+import GlobalLayout from 'components/Layout/global'
+import PropTypes from 'prop-types'
+import { AuthProvider } from 'util/useAuth'
+
+const App = ({ Component, pageProps }) => {
   return (
-    <ProvideAuth>
-      <ProvideAuthLoading>
+    <AuthProvider>
+      <GlobalLayout>
         <Component {...pageProps} />
-      </ProvideAuthLoading>
-    </ProvideAuth>
+      </GlobalLayout>
+    </AuthProvider>
   )
 }
+
+App.propTypes = {
+  Component: PropTypes.func,
+  pageProps: PropTypes.object,
+}
+
+export default App

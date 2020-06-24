@@ -1,10 +1,11 @@
-import firebase from '../util/firebase'
-import NotFound from './404'
-import ProfileScreen from 'screens/ProfileScreen'
 import Layout from 'components/Layout'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useDebugValue } from 'react'
-import { useRouter } from 'next/router'
+import ProfileScreen from 'screens/ProfileScreen'
+
+import firebase from '../util/firebase'
+import NotFound from './404'
 
 const Profile = () => {
   const [userData, setUserData] = useState(null)
@@ -12,12 +13,12 @@ const Profile = () => {
   const { username } = router.query
 
   useEffect(() => {
-    function startListening () {
+    function startListening() {
       return firebase
         .firestore()
         .collection('users')
         .where('username', '==', username)
-        .onSnapshot(snapshot => {
+        .onSnapshot((snapshot) => {
           if (snapshot.empty) {
             return setUserData(false)
           } else {
@@ -34,7 +35,7 @@ const Profile = () => {
     if (username) {
       unsubscribe = startListening()
     }
-    
+
     return () => unsubscribe()
   }, [username])
 

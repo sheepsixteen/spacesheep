@@ -1,25 +1,30 @@
-import Layout from 'components/Layout'
-import theme from 'styles/theme'
+import { EuiButton, EuiTitle } from '@elastic/eui'
+import Page from 'components/Layout/Page'
 import { FaGithub } from 'react-icons/fa'
+import theme from 'styles/theme'
 import continueWith from 'util/continueWith'
 
 const LoginScreen = () => {
   return (
-    <Layout
-      title="Login"
-      hero={
-        <div className="container">
-          <div className="content">
-            <h1>Login to SpaceSheep</h1>
-
-            <button onClick={e => continueWith('github')} className="button github">
-              <FaGithub />
-              <span>Continue with GitHub</span>
-            </button>
-          </div>
-        </div>
-      }
-    >
+    <Page title="Login" noTitle>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <EuiTitle size="l">
+          <h1>Login</h1>
+        </EuiTitle>
+        <EuiButton
+          iconType="logoGithub"
+          onClick={(e) => continueWith('github')}
+        >
+          Continue with Github
+        </EuiButton>
+      </div>
       <style jsx>{`
         .container {
           height: 100%;
@@ -43,7 +48,7 @@ const LoginScreen = () => {
           border-radius: 4px;
           display: inline-flex;
           align-items: center;
-          transition: box-shadow .2s ease;
+          transition: box-shadow 0.2s ease;
           cursor: pointer;
         }
 
@@ -66,7 +71,7 @@ const LoginScreen = () => {
           margin-bottom: 2rem;
         }
       `}</style>
-    </Layout>
+    </Page>
   )
 }
 

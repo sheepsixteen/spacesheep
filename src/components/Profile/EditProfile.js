@@ -1,11 +1,11 @@
-import Modal from '@atlaskit/modal-dialog'
-import Form, { Field, FormFooter } from '@atlaskit/form'
-import TextField from '@atlaskit/textfield'
-import firebase from 'util/firebase'
 import Button from '@atlaskit/button'
+import Form, { Field, FormFooter } from '@atlaskit/form'
+import Modal from '@atlaskit/modal-dialog'
+import TextField from '@atlaskit/textfield'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useRef } from 'react'
+import firebase from 'util/firebase'
 
 const EditProfile = ({ uid, profile, onClose, ...props }) => {
   const pictureRef = useRef(null)
@@ -20,7 +20,7 @@ const EditProfile = ({ uid, profile, onClose, ...props }) => {
   }
 
   const updateUserData = (data) => {
-    for (let key of Object.keys(data)) {
+    for (const key of Object.keys(data)) {
       if (!data[key]) {
         delete data[key]
       }

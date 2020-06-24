@@ -8,7 +8,7 @@ export default ({ items }) => {
 
   return (
     <div className={styles.list}>
-      {items.map(x => (
+      {items.map((x) => (
         <Mission key={x.eid} {...x} />
       ))}
     </div>

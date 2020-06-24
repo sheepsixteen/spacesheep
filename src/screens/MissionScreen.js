@@ -1,21 +1,26 @@
+import { BreadcrumbsItem, BreadcrumbsStateless } from '@atlaskit/breadcrumbs'
+import { ButtonGroup } from '@atlaskit/button'
+import InlineMessage from '@atlaskit/inline-message'
+import Tabs from '@atlaskit/tabs'
+import TagGroup from '@atlaskit/tag-group'
+import Tooltip from '@atlaskit/tooltip'
+import CommunitySolutions from 'components/CommunitySolutions'
+import { Star, WorkStatus } from 'components/Interactions'
+import Log from 'components/Interactions/Log'
 import Layout from 'components/Layout'
 import Card from 'elements/Card'
-import Tag from 'elements/Tag'
-import TagGroup from '@atlaskit/tag-group'
-import theme from 'styles/theme'
-import { useAuth } from 'util/useAuth'
-import { ButtonGroup } from '@atlaskit/button'
-import { WorkStatus, Star } from 'components/Interactions'
-import { useInteraction } from 'util/useInteraction'
-import { BreadcrumbsStateless, BreadcrumbsItem } from '@atlaskit/breadcrumbs'
 import Source from 'elements/Source'
-import InlineMessage from '@atlaskit/inline-message'
+import Tag from 'elements/Tag'
 import Link from 'next/link'
-import Tooltip from '@atlaskit/tooltip'
+import { useState } from 'react'
+import theme from 'styles/theme'
+import useAuth from 'util/useAuth'
+import { useInteraction } from 'util/useInteraction'
 
 const MissionScreen = ({ mission }) => {
-  const user = useAuth()
+  const { user } = useAuth()
   const [interaction, setInteraction] = useInteraction(mission.id)
+  const [selectedTab, setSelectedTab] = useState(0)
 
   return (
     <Layout title={mission.title}>
@@ -24,22 +29,43 @@ const MissionScreen = ({ mission }) => {
           <h1>{mission.title}</h1>
         </div>
 
-        <Card
-          header={
-            mission.source ? (
-              <Source source={mission.source} />
-            ) : (
-              <p>Unkown source</p>
-            )
-          }
-        >
-          <div
-            className="card-body"
-            dangerouslySetInnerHTML={{ __html: mission.body }}
-          ></div>
-        </Card>
+        <main>
+          <Card
+            header={
+              mission.source ? (
+                <Source source={mission.source} />
+              ) : (
+                <p>Unkown source</p>
+              )
+            }
+          >
+            <div
+              className="card-body"
+              dangerouslySetInnerHTML={{ __html: mission.body }}
+            ></div>
+          </Card>
+          <div className="tabs">
+            <Tabs
+              tabs={[
+                {
+                  label: 'Your log',
+                  content: (
+                    <Log
+                      interaction={interaction}
+                      setInteraction={setInteraction}
+                    />
+                  ),
+                },
+                {
+                  label: 'Community solutions',
+                  content: <CommunitySolutions mid={mission.id} />,
+                },
+              ]}
+            />
+          </div>
+        </main>
 
-        <div className="sidebar">
+        <aside className="sidebar">
           <div className="section">
             <p>Tags</p>
             <TagGroup>
@@ -48,7 +74,6 @@ const MissionScreen = ({ mission }) => {
                   <Tag key={tag} text={tag} color="gray" />
                 ))}
             </TagGroup>
-
           </div>
           <div className="section">
             <p>Actions</p>
@@ -61,14 +86,14 @@ const MissionScreen = ({ mission }) => {
               <Link href="/login" passHref>
                 <a>
                   <InlineMessage
-                    onClick={e => e.preventDefault()}
+                    onClick={(e) => e.preventDefault()}
                     title={<p>Login to interact with this mission</p>}
                   />
                 </a>
               </Link>
             )}
           </div>
-        </div>
+        </aside>
       </div>
 
       <style jsx>{`
@@ -83,8 +108,8 @@ const MissionScreen = ({ mission }) => {
           border-bottom: 1px solid ${theme.colors.darkerBackground};
         }
 
-        .mission {
-          margin-top: 2rem;
+        aside {
+          grid-row: 2/3;
         }
 
         .card-body {
@@ -101,6 +126,10 @@ const MissionScreen = ({ mission }) => {
           margin-bottom: 0.4rem;
         }
 
+        .tabs {
+          margin-top: 1rem;
+        }
+
         @media screen and (min-width: 60em) {
           .layout {
             margin-top: 4rem;
@@ -110,6 +139,10 @@ const MissionScreen = ({ mission }) => {
 
           .title {
             grid-column: 1/3;
+          }
+
+          aside {
+            grid-row: inherit;
           }
         }
       `}</style>

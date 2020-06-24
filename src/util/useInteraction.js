@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react'
-import { useAuth } from './useAuth'
+import { useEffect, useState } from 'react'
+
 import firebase from '../util/firebase'
+import useAuth from './useAuth'
 
 export const useInteraction = (eid) => {
   const [interaction, setInteraction] = useState(null)
-  const user = useAuth()
+  const { user } = useAuth()
 
   function updateInteraction(data) {
     setInteraction({ ...interaction, ...data })
@@ -18,11 +19,14 @@ export const useInteraction = (eid) => {
         // writing, saving some time.
         .collection('interactions')
         .doc(user.uid + eid)
-        .set({
-          uid: user.uid,
-          eid,
-          ...data,
-        }, { merge: true })
+        .set(
+          {
+            uid: user.uid,
+            eid,
+            ...data,
+          },
+          { merge: true }
+        )
     )
   }
 

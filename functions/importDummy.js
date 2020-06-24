@@ -7,48 +7,60 @@ const admin = require('firebase-admin')
  * @param {*} res
  */
 exports.importDummy = functions.https.onRequest((req, res) => {
-  admin.firestore()
+  admin
+    .firestore()
     .collection('entities')
     .get()
-    .then(snapshot => {
+    .then((snapshot) => {
       if (snapshot.empty) {
         // Empty, lets add some stuff
-        admin.firestore()
+        admin
+          .firestore()
           .doc('/entities/qLF2ghoJTMwg07183PtA')
           .set({
             difficulty: 2,
-            from: 'https://raw.githubusercontent.com/sheepsixteen/missions/master/Palindromic%20Numbers.md',
+            from:
+              'https://raw.githubusercontent.com/sheepsixteen/missions/master/Palindromic%20Numbers.md',
             source: [
-              { href: 'https://www.olympiad.org.uk/', label: 'British Informatics Olympiad' },
-              { href: 'https://www.olympiad.org.uk/papers/2019/bio/bio19-exam.pdf', label: '2019 Paper' }
+              {
+                href: 'https://www.olympiad.org.uk/',
+                label: 'British Informatics Olympiad',
+              },
+              {
+                href:
+                  'https://www.olympiad.org.uk/papers/2019/bio/bio19-exam.pdf',
+                label: '2019 Paper',
+              },
             ],
             tags: ['algorithm', 'good first mission'],
             title: 'Palindromic Numbers',
             type: 'mission',
-            slug: 'palindromic_numbers'
+            slug: 'palindromic_numbers',
           })
 
-        admin.firestore()
+        admin
+          .firestore()
           .doc('/entities/anothermission')
           .set({
             difficulty: 1,
-            from: 'https://raw.githubusercontent.com/sheepsixteen/missions/master/Palindromic%20Numbers.md',
+            from:
+              'https://raw.githubusercontent.com/sheepsixteen/missions/master/Palindromic%20Numbers.md',
             tags: ['html'],
             title: 'Another mission',
             type: 'mission',
-            slug: 'test_mission'
+            slug: 'test_mission',
           })
 
         res.send('Done.')
       } else {
         console.info('Already data in firestore.')
-        res.send(snapshot.docs.map(x => x.data()))
+        res.send(snapshot.docs.map((x) => x.data()))
       }
     })
-    .then(response => {
+    .then((response) => {
       res.send(response)
     })
-    .catch(err => {
+    .catch((err) => {
       console.error('Error in firebase function: ', new Error(err))
       res.send(err)
     })

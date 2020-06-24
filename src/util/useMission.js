@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react'
-import firebase from './firebase'
 import * as axios from 'axios'
 import * as matter from 'gray-matter'
 import * as MarkdownIt from 'markdown-it'
+import { useEffect, useState } from 'react'
 
-function useMission (mid) {
+import firebase from './firebase'
+
+function useMission(mid) {
   const md = new MarkdownIt()
 
   const [mission, setMission] = useState(null)
@@ -13,11 +14,12 @@ function useMission (mid) {
 
   // Gets mission info from firebase
   useEffect(() => {
-    function getMission () {
-      firebase.firestore()
+    function getMission() {
+      firebase
+        .firestore()
         .doc(`entities/${mid}`)
         .get()
-        .then(snapshot => {
+        .then((snapshot) => {
           setMission(snapshot.data())
           setMissionSnapshot(snapshot)
         })
@@ -30,20 +32,19 @@ function useMission (mid) {
 
   // Get mission content
   useEffect(() => {
-    function getMissionData () {
+    function getMissionData() {
       // Url is saved in firestore
       const url = missionSnapshot.data().from
 
       // Get the content from sheepsixteen/missions/<mission>
-      axios.get(url)
-        .then(raw => {
-          // Extract the content (disregarding front matter)
-          const matterObj = matter(raw.data)
-          // Render markdown
-          const html = md.render(matterObj.content)
+      axios.get(url).then((raw) => {
+        // Extract the content (disregarding front matter)
+        const matterObj = matter(raw.data)
+        // Render markdown
+        const html = md.render(matterObj.content)
 
-          setContent(html)
-        })
+        setContent(html)
+      })
     }
 
     if (missionSnapshot && mid) {
@@ -54,7 +55,7 @@ function useMission (mid) {
   return {
     missionSnapshot,
     mission,
-    content
+    content,
   }
 }
 
