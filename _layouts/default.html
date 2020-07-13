@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css" />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+
+    <link rel="icon" 
+      type="image/png" 
+      href="/assets/images/logo.png">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% seo %}
+  </head>
+  <body class="sans-serif bg-washed-yellow">
+
+    {% include header.html %}
+
+    <main class="measure-wide mh3 mh5-ns mt5 content">
+      {{ content }}
+    </main>
+
+  </body>
+</html>
+

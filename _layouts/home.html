@@ -1,0 +1,18 @@
+---
+layout: default
+title: Home
+---
+
+<h1 class="mt4">Missions</h1>
+<p>Each mission introduces you to a new tool, best practice, or project. You
+can pick whichever mission you like, and we'll constantly be adding more.</p>
+
+<ul>
+  {% for post in site.posts %}
+    <li>
+      <a class="link underline dark-blue hover-blue lh-copy" href="{{ post.url }}">
+        {{ post.title }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
