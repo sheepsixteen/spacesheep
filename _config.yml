@@ -3,7 +3,7 @@ email: sheep16@gmail.com
 tagline: Bring your programming skills to the real world
 description: >-
   Advance your programming skills beyond that one "hello world" program.
-baseurl: "/spacesheep" # the subpath of your site, e.g. /blog
+baseurl: "/spacesheep" # TODO: change to "" when moved to new domain
 url: "https://spacesheep.dev"
 twitter_username: sheepsixteen
 github_username: sheepsixteen

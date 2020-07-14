@@ -1,14 +1,23 @@
 <header class="measure-wide mh3 mh5-ns mt5">
   <div class="w3">
-    <img alt="SpaceSheep logo" src="/assets/images/logo.png" />
+    <img
+      alt="SpaceSheep logo"
+      src="{ '/assets/images/logo.png' | relative_url }"
+    />
   </div>
 
-  <p class="f5 normal i dark-gray"><span class="b">SpaceSheep</span> - Bridge the gap between theoretical and practical
-  programming.</p>
+  <p class="f5 normal i dark-gray">
+    <span class="b">SpaceSheep</span> - Bridge the gap between theoretical and
+    practical programming.
+  </p>
 
   <div class="links">
     {% for link in site.data.nav.links %}
-    <a class="link mr2 underline dark-blue hover-blue" href="{{ link.href }}">{{ link.label }}</a>
+    <a
+      class="link mr2 underline dark-blue hover-blue"
+      href="{{ link.href | relative_url }}"
+      >{{ link.label }}</a
+    >
     {% endfor %}
   </div>
 </header>
