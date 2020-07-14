@@ -3,7 +3,7 @@ layout: post
 title: I know html, now what?
 date: 2020-07-13 16:56 +0100
 learn:
-  - hosting a basic website on vercel, netlify, and github pages
+  - hosting a basic website on GitHub pages
 ---
 
 # I know HTML, now what?
@@ -12,7 +12,7 @@ learn:
 
 ## Background
 
-After completeling that [one codeacadmey
+After completing that [one Codecademy
 course](https://www.codecademy.com/learn/learn-html), you know how tags work,
 some html elements, maybe even some [a11y](https://a11yproject.com/) if you're
 lucky. You can probably make a simple web page.
@@ -21,7 +21,7 @@ Now, you want to show off your progress... How exactly do you do that? How do
 your favourite websites actually, website?
 
 Well, you might have heard that the internet is made up of loads of computers
-talking to eachother, and this essentialy true. A website is just a computer
+talking to each other, and this essentially true. A website is just a computer
 which always answers another computer's questions with some html files.
 
 {% include image.html
@@ -29,18 +29,15 @@ url="/assets/posts/i-know-html-now-what/server-client-diagram.png"
 description="A server-client diagram, the client sends a request (through
 network cables) for the homepage, the server responds by sending files." %}
 
-Although you could set up your computer to be a web server, there are a couple
+Although you could set up your computer to be a web server, there are a couple of
 issues:
 
-  * For one, you would have to keep your computer on *all the time*... What if
-  the power cuts out?
+  * For one, you would have to keep your computer on *all the time*... What if the power cuts out?
 
-  * Your computer would also need to be super fast to handle all the millions of
-  requests your webiste is going to receive. (wishful thinking)
+  * Your computer would also need to be super fast to handle all the millions of requests your website is going to receive. (wishful thinking)
 
   * You would have to open up your computer to the scary internet. Anyone would
-  be able to make requests to your computer, which means that if your operating
-  system isn't up-to-date, hackers could breach it!
+  be able to make requests to your computer, which means that if your operating system isn't up-to-date, hackers could breach it!
 
 For these reasons you might not want your computer to be a web server, and
 instead: find a web server that you can buy/rent (hopefully without spending too
@@ -61,7 +58,7 @@ phone, and from your friend's phone.
   - The file must be able to be viewed from anywhere. **This means that you can't
   just host it on localhost on your computer.**
 
-  - The file should be showed as rendered html, not just the raw file. ([How does the browser know?](https://stackoverflow.com/questions/3828352/what-is-a-mime-type#:~:text=A%20MIME%20type%20is%20a,extensions%20do%20on%20Microsoft%20Windows.))
+  - The file should be shown as rendered html, not just the raw file. ([How does the browser know?](https://stackoverflow.com/questions/3828352/what-is-a-mime-type#:~:text=A%20MIME%20type%20is%20a,extensions%20do%20on%20Microsoft%20Windows.))
 
   - You can't spend **any** money.
 
@@ -70,7 +67,7 @@ phone, and from your friend's phone.
 <details>
   <summary>Click here to show the first hint</summary>
 
-  Try googling "How to host website for free on github"
+  Try googling "How to host a website for free on GitHub"
 </details>
 
 <details>
@@ -95,7 +92,7 @@ with the [community](/community).
 
 ## Other hosting platforms
 
-If you feel really inspired, you can try a different hosting platofrm. Here's a
+If you feel inspired, you can try a different hosting platform. Here's a
 (by no means extensive) list:
 
   1. [Vercel](https://vercel.com/about)
@@ -108,16 +105,16 @@ to read [their blog](https://vercel.com/blog). Vercel is used for hobby projects
 
   2. [Heroku](https://www.heroku.com/about)
 
-Heroku is a bit more complex, and focused towards big companies. However, they
+Heroku is a bit more complex and focused on big companies. However, they
 still provide a generous free plan. One of their best features is the
 marketplace; you can add modules to your projects (e.g. a database) with the
 click of a button. This is perfect if you want to extend your website without
-having to set up loads of boring stuff. Marvelous!
+having to set up loads of boring stuff. Marvellous!
 
   3. [Firebase](https://www.heroku.com/about)
 
 Firebase provides you with a very helpful interface in front of the [Google
-Cloud Platform](), which is terribly complicated. It's used by [huge
+Cloud Platform](), which is complicated. It's used by [huge
 companies](https://firebase.google.com/#trusted-by-the-largest-apps-and-games),
 but it has a free plan as well, so it's used for hobby projects. You can easily
 host files (which is useful for this mission) using their web hosting, but you
@@ -125,7 +122,7 @@ can also host a database, authenticate users, and more.
 
   4. Amazon Web Services, Google Cloud Platform, and Microsoft Azure
 
-These three services are basically places where you can rent a little bit a of
+These three services are basically places where you can rent a little bit of
 computing power from the massive server farms at Amazon, Google, and Microsoft.
 
 Each one has different services they provide, including computing,
