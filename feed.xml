@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<?xml version="1.0" encoding="utf-8"?><html><body><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en_UK"><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://spacesheep.dev/spacesheep/feed.xml" rel="self" type="application/atom+xml">
+<link href="https://spacesheep.dev/spacesheep/" rel="alternate" type="text/html" hreflang="en_UK">
+<updated>2020-07-17T13:32:36+00:00</updated><id>https://spacesheep.dev/spacesheep/feed.xml</id><title type="html">SpaceSheep</title>
+<subtitle>Advance your programming skills beyond that one "hello world" program.</subtitle><entry><title type="html">I know html, now what?</title>
+<link href="https://spacesheep.dev/spacesheep/2020/07/13/i-know-html-now-what.html" rel="alternate" type="text/html" title="I know html, now what?">
+<published>2020-07-13T15:56:00+00:00</published><updated>2020-07-13T15:56:00+00:00</updated><id>https://spacesheep.dev/spacesheep/2020/07/13/i-know-html-now-what</id><content type="html" xml:base="https://spacesheep.dev/spacesheep/2020/07/13/i-know-html-now-what.html">&lt;h1 id="i-know-html-now-what"&gt;I know HTML, now what?&lt;/h1&gt;
+&lt;p&gt;&lt;a href="#the-mission"&gt;Skip to the mission&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="background"&gt;Background&lt;/h2&gt;
+&lt;p&gt;After completing that &lt;a href="https://www.codecademy.com/learn/learn-html"&gt;one Codecademy
+course&lt;/a&gt;, you know how tags work,
+some html elements, maybe even some &lt;a href="https://a11yproject.com/"&gt;a11y&lt;/a&gt; if you're
+lucky. You can probably make a simple web page.&lt;/p&gt;
+&lt;p&gt;Now, you want to show off your progress... How exactly do you do that? How do
+your favourite websites actually, website?&lt;/p&gt;
+&lt;p&gt;Well, you might have heard that the internet is made up of loads of computers
+talking to each other, and this essentially true. A website is just a computer
+which always answers another computer's questions with some html files.&lt;/p&gt;
+&lt;figure class="image w-100 mh0"&gt;
+  &lt;img src="/spacesheep/assets/posts/i-know-html-now-what/server-client-diagram.png" alt="A server-client diagram, the client sends a request (through
+network cables) for the homepage, the server responds by sending files."&gt;
+  &lt;figcaption class="dark-gray tc i my2"&gt;A server-client diagram, the client sends a request (through
+network cables) for the homepage, the server responds by sending files.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Although you could set up your computer to be a web server, there are a couple of
+issues:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;For one, you would have to keep your computer on &lt;em&gt;all the time&lt;/em&gt;... What if the power cuts out?&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Your computer would also need to be super fast to handle all the millions of requests your website is going to receive. (wishful thinking)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;You would have to open up your computer to the scary internet. Anyone would
+be able to make requests to your computer, which means that if your operating system isn't up-to-date, hackers could breach it!&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For these reasons you might not want your computer to be a web server, and
+instead: find a web server that you can buy/rent (hopefully without spending too
+much money).&lt;/p&gt;
+&lt;section id="mission"&gt;
+&lt;h2 id="your-mission"&gt;Your mission&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Your mission is to upload &lt;a
+href="/assets/posts/i-know-html-now-what/index.html" title="Click to download
+the file you should upload to the internet" download&gt;this html file&lt;/a&gt; to the
+internet&lt;/strong&gt;.  You should be able to access it from your computer, from your
+phone, and from your friend's phone.&lt;/p&gt;
+&lt;h3 id="constraints"&gt;Constraints&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;The file must be able to be viewed from anywhere. &lt;strong&gt;This means that you can't
+just host it on localhost on your computer.&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The file should be shown as rendered html, not just the raw file. (&lt;a href="https://stackoverflow.com/questions/3828352/what-is-a-mime-type#:~:text=A%20MIME%20type%20is%20a,extensions%20do%20on%20Microsoft%20Windows."&gt;How does the browser know?&lt;/a&gt;)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;You can't spend &lt;strong&gt;any&lt;/strong&gt; money.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="hints"&gt;Hints&lt;/h3&gt;
+&lt;details&gt;
+  &lt;summary&gt;Click here to show the first hint&lt;/summary&gt;
+&lt;p&gt;Try googling &amp;quot;How to host a website for free on GitHub&amp;quot;&lt;/p&gt;
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;Click here to show the second hint&lt;/summary&gt;
+&lt;p&gt;You could use &lt;a href="https://pages.github.com/"&gt;Github pages&lt;/a&gt;.&lt;/p&gt;
+&lt;/details&gt;
+&lt;/section&gt;
+&lt;h2 id="after-you-have-done-the-mission"&gt;After you have done the mission&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Don't look here unless you have completed the mission!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;If you followed the hint, you should have created a GitHub account, then a
+repository (often called a &amp;quot;repo&amp;quot;). Then, uploaded the file. You should have
+then pressed &amp;quot;settings&amp;quot; and scrolled to the &amp;quot;GitHub Pages&amp;quot; section, where you
+can enable GitHub pages.&lt;/p&gt;
+&lt;p&gt;If you found a different solution, amazing! Feel free to share your solution
+with the &lt;a href="/community"&gt;community&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id="other-hosting-platforms"&gt;Other hosting platforms&lt;/h2&gt;
+&lt;p&gt;If you feel inspired, you can try a different hosting platform. Here's a
+(by no means extensive) list:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="https://vercel.com/about"&gt;Vercel&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Vercel is specifically built for &lt;a href="https://nextjs.org/"&gt;next.js&lt;/a&gt;, &lt;em&gt;but&lt;/em&gt;, you can
+put loads of things there, including static html files. They have some pretty
+unique solutions to problems the web developers face every day, you might want
+to read &lt;a href="https://vercel.com/blog"&gt;their blog&lt;/a&gt;. Vercel is used for hobby projects
+(because they are completely free) as well as for large-scale services.&lt;/p&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;&lt;a href="https://www.heroku.com/about"&gt;Heroku&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Heroku is a bit more complex and focused on big companies. However, they
+still provide a generous free plan. One of their best features is the
+marketplace; you can add modules to your projects (e.g. a database) with the
+click of a button. This is perfect if you want to extend your website without
+having to set up loads of boring stuff. Marvellous!&lt;/p&gt;
+&lt;ol start="3"&gt;
+&lt;li&gt;&lt;a href="https://www.heroku.com/about"&gt;Firebase&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Firebase provides you with a very helpful interface in front of the &lt;a href=""&gt;Google
+Cloud Platform&lt;/a&gt;, which is complicated. It's used by &lt;a href="https://firebase.google.com/#trusted-by-the-largest-apps-and-games"&gt;huge
+companies&lt;/a&gt;,
+but it has a free plan as well, so it's used for hobby projects. You can easily
+host files (which is useful for this mission) using their web hosting, but you
+can also host a database, authenticate users, and more.&lt;/p&gt;
+&lt;ol start="4"&gt;
+&lt;li&gt;Amazon Web Services, Google Cloud Platform, and Microsoft Azure&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;These three services are basically places where you can rent a little bit of
+computing power from the massive server farms at Amazon, Google, and Microsoft.&lt;/p&gt;
+&lt;p&gt;Each one has different services they provide, including computing,
+databases, graphics processing units (for machine learning), or even just
+virtual machines!&lt;/p&gt;
+&lt;p&gt;This is the perfect place to go if you're looking for 100% flexibility. You can
+configure these machines in whatever crazy way you like. The problem is that you
+can configure them in any way you like! It's a substantial amount of work that
+could be spent elsewhere.&lt;/p&gt;
+&lt;p&gt;Unless you are working on a project which is cutting-edge and needs loads of
+customizing, you are probably better off just using one of the other options,
+where you don't have to worry about the server, instead you just worry about the
+code.&lt;/p&gt;
+&lt;h2 id="a-few-things-to-note"&gt;A few things to note&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;GitHub pages is used &lt;em&gt;all the time&lt;/em&gt;. It's free, you can edit it easily, you
+get a nice domain, amazing.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Each of these solutions has a benefit and a downside. You should try all of
+them at least once, and then choose your favourite.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Don't worry too much about the speed. All of them are speedy quick and with
+&lt;a href="https://www.cloudflare.com/learning/cdn/what-is-caching/"&gt;caching&lt;/a&gt; they will
+perform much better than you expect.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">I know HTML, now what?</summary></entry></feed></body></html>
